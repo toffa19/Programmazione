@@ -1,0 +1,104 @@
+{
+  "exercises": [
+    {
+      "macroTopic": "MacroTopic1",
+      "levels": {
+        "facile": [
+          {
+            "questionId": "MT1_F1",
+            "question": "Domanda 1 facile del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta A"
+          },
+          {
+            "questionId": "MT1_F2",
+            "question": "Domanda 2 facile del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta B"
+          },
+          {
+            "questionId": "MT1_F3",
+            "question": "Domanda 3 facile del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta C"
+          }
+        ],
+        "medio": [
+          {
+            "questionId": "MT1_M1",
+            "question": "Domanda 1 medio del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta D"
+          },
+          {
+            "questionId": "MT1_M2",
+            "question": "Domanda 2 medio del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta A"
+          },
+          {
+            "questionId": "MT1_M3",
+            "question": "Domanda 3 medio del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta B"
+          }
+        ],
+        "difficile": [
+          {
+            "questionId": "MT1_D1",
+            "question": "Domanda 1 difficile del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta C"
+          },
+          {
+            "questionId": "MT1_D2",
+            "question": "Domanda 2 difficile del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta D"
+          },
+          {
+            "questionId": "MT1_D3",
+            "question": "Domanda 3 difficile del MacroTopic1?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta A"
+          }
+        ]
+      }
+    },
+    {
+      "macroTopic": "MacroTopic2",
+      "levels": {
+        "facile": [
+          {
+            "questionId": "MT2_F1",
+            "question": "Domanda 1 facile del MacroTopic2?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta B"
+          },
+          {
+            "questionId": "MT2_F2",
+            "question": "Domanda 2 facile del MacroTopic2?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta C"
+          }
+        ],
+        "medio": [
+          {
+            "questionId": "MT2_M1",
+            "question": "Domanda 1 medio del MacroTopic2?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta A"
+          }
+        ],
+        "difficile": [
+          {
+            "questionId": "MT2_D1",
+            "question": "Domanda 1 difficile del MacroTopic2?",
+            "options": ["Risposta A", "Risposta B", "Risposta C", "Risposta D"],
+            "correctAnswer": "Risposta D"
+          }
+        ]
+      }
+    }
+  ]
+}

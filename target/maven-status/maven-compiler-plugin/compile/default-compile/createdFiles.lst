@@ -1,0 +1,17 @@
+com\progetto\model\QuestionResult.class
+com\progetto\repository\AbstractRepository.class
+com\progetto\Main.class
+com\progetto\model\Progress.class
+com\progetto\viewmodel\LoginViewModel.class
+com\progetto\model\User.class
+com\progetto\model\ExercisesWrapper.class
+com\progetto\model\Exercise.class
+com\progetto\model\Question.class
+com\progetto\repository\ExerciseRepository.class
+com\progetto\model\MultipleChoiceExercise.class
+com\progetto\repository\UserRepository.class
+com\progetto\view\LoginController.class
+com\progetto\model\UsersWrapper.class
+com\progetto\view\SignUpController.class
+com\progetto\util\Config.class
+com\progetto\viewmodel\SignUpViewModel.class

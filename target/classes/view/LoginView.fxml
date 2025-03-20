@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.progetto.view.LoginController"
+      spacing="20" alignment="CENTER">
+    <padding>
+        <Insets top="40" bottom="40" left="40" right="40"/>
+    </padding>
+    <children>
+        <Label text="Login" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+        <TextField fx:id="usernameField" promptText="Username" />
+        <PasswordField fx:id="passwordField" promptText="Password" />
+        <Button fx:id="loginButton" text="Login" prefWidth="150" />
+        <!-- Il pulsante per passare alla schermata di registrazione -->
+        <Button fx:id="goToSignUpButton" text="Sign Up" prefWidth="150" />
+    </children>
+</VBox>
