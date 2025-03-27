@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.progetto.view.TopicHomeController">
+
+    <!-- SEZIONE SINISTRA: Path delle domande -->
+    <left>
+        <ScrollPane fitToWidth="true">
+            <content>
+                <VBox fx:id="pathContainer" spacing="10" style="-fx-padding: 10;">
+                    <!-- Verrà popolato dinamicamente -->
+                </VBox>
+            </content>
+        </ScrollPane>
+    </left>
+
+    <!-- SEZIONE DESTRA: Dettagli del topic -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+            <children>
+                <Label fx:id="topicTitle" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                <Label fx:id="topicDescription" wrapText="true" />
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
