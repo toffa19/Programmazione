@@ -2,27 +2,33 @@ package com.progetto.viewmodel;
 
 import com.progetto.model.User;
 import com.progetto.repository.UserRepository;
+import com.progetto.util.SessionManager;
+import java.util.ArrayList;
 
 public class ProfileViewModel {
     private final UserRepository userRepository;
-    private User currentUser; // Utente corrente caricato dal JSON
+    private User currentUser;
 
     public ProfileViewModel() {
         userRepository = new UserRepository();
-        // Per scopi dimostrativi, usiamo il primo utente della lista come "utente loggato"
-        if (!userRepository.getAllUsers().isEmpty()) {
-            currentUser = userRepository.getAllUsers().get(0);
-        } else {
-            // Se non ci sono utenti, creiamo un utente vuoto (gestione migliorabile in produzione)
-            currentUser = new User();
-        }
+        loadUserData();
     }
 
     public void loadUserData() {
-        // I dati sono già presenti in currentUser
+        String loggedUserId = SessionManager.getCurrentUserId();
+        currentUser = null;
+        for (User user : userRepository.getAllUsers()) {
+            if (user.getId() != null && user.getId().equals(loggedUserId)) {
+                currentUser = user;
+                break;
+            }
+        }
+        if (currentUser == null) {
+            currentUser = new User();
+            currentUser.setProgress(new ArrayList<>());
+        }
     }
 
-    // Full Name (usiamo firstName come nome)
     public String getFullName() {
         return currentUser.getFirstName() != null ? currentUser.getFirstName() : "";
     }
@@ -30,15 +36,10 @@ public class ProfileViewModel {
         currentUser.setFirstName(fullName);
     }
 
-    // NickName (campo aggiunto)
-    public String getNickName() {
-        return currentUser.getNickName() != null ? currentUser.getNickName() : "";
-    }
-    public void setNickName(String nickName) {
-        currentUser.setNickName(nickName);
+    public String getUsername() {
+        return currentUser.getUsername() != null ? currentUser.getUsername() : "";
     }
 
-    // Country (campo aggiunto)
     public String getCountry() {
         return currentUser.getCountry() != null ? currentUser.getCountry() : "";
     }
@@ -46,7 +47,6 @@ public class ProfileViewModel {
         currentUser.setCountry(country);
     }
 
-    // Language (campo aggiunto)
     public String getLanguage() {
         return currentUser.getLanguage() != null ? currentUser.getLanguage() : "";
     }
@@ -54,7 +54,6 @@ public class ProfileViewModel {
         currentUser.setLanguage(language);
     }
 
-    // Password
     public String getPassword() {
         return currentUser.getPassword() != null ? currentUser.getPassword() : "";
     }
@@ -65,16 +64,12 @@ public class ProfileViewModel {
     public String getEmail() {
         return currentUser.getEmail() != null ? currentUser.getEmail() : "";
     }
-    // L'email non viene modificata in questo esempio
 
-    /**
-     * Salva i dati del profilo aggiornando il JSON degli utenti.
-     */
     public void saveUserData() {
         userRepository.updateUser(currentUser);
         System.out.println("Saving user data: "
                 + getFullName() + ", "
-                + getNickName() + ", "
+                + getUsername() + ", "
                 + getCountry() + ", "
                 + getLanguage());
     }

@@ -46,17 +46,17 @@
                 <Label text="Full Name"/>
                 <TextField fx:id="fullNameField" promptText="Your Full Name"/>
 
-                <Label text="Nickname"/>
-                <TextField fx:id="nickNameField" promptText="Your Nickname"/>
+                <Label text="Username"/>
+                <TextField fx:id="usernameField" promptText="Your Nickname"/>
 
-                <Label text="Gender"/>
-                <TextField fx:id="genderField" promptText="Gender"/>
+<!--                <Label text="Gender"/>-->
+<!--                <TextField fx:id="genderField" promptText="Gender"/>-->
 
                 <Label text="Country"/>
                 <TextField fx:id="countryField" promptText="Country"/>
 
-                <Label text="Time Zone"/>
-                <TextField fx:id="timeZoneField" promptText="Time Zone"/>
+<!--                <Label text="Time Zone"/>-->
+<!--                <TextField fx:id="timeZoneField" promptText="Time Zone"/>-->
 
                 <Label text="Current Password"/>
                 <PasswordField fx:id="currentPasswordField" promptText="Current Password" editable="false"/>

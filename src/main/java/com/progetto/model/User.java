@@ -5,28 +5,20 @@ import java.util.List;
 public class User {
     private String id;
     private String username;
-    private String password; // password già hashata
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
-    private List<Progress> progress;
+    // Nuovi campi per il profilo
     private String nickName;
     private String country;
     private String language;
-    public User() {
-    }
+    private String gender;
+    private String timeZone;
+    // Campo per registrare i progressi
+    private List<Progress> progress;
 
-    public User(String id, String username, String password, String firstName, String lastName, String email, List<Progress> progress) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.progress = progress;
-    }
-
-    // Getters & Setters
+    // Getters and setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -39,36 +31,19 @@ public class User {
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+//    public String getLastName() { return lastName; }
+//    public void setLastName(String lastName) { this.lastName = lastName; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
+
+    public String getCountry() { return country; }
+    public void setCountry(String country) { this.country = country; }
+
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
+
     public List<Progress> getProgress() { return progress; }
     public void setProgress(List<Progress> progress) { this.progress = progress; }
-    // Getter e setter per nickName
-    public String getNickName() {
-        return nickName;
-    }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    // Getter e setter per country
-    public String getCountry() {
-        return country;
-    }
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    // Getter e setter per language
-    public String getLanguage() {
-        return language;
-    }
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
 }

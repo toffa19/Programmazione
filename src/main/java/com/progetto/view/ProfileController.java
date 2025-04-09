@@ -21,10 +21,8 @@ public class ProfileController {
     @FXML private Label emailLabel;
 
     @FXML private TextField fullNameField;
-    @FXML private TextField nickNameField;
-    @FXML private TextField genderField;
+    @FXML private TextField usernameField;
     @FXML private TextField countryField;
-    @FXML private TextField timeZoneField;
     @FXML private ComboBox<String> languageComboBox;
     @FXML private PasswordField currentPasswordField; // Campo per mostrare la password corrente (disabilitato)
     @FXML private PasswordField newPasswordField;     // Campo per inserire la nuova password
@@ -36,6 +34,9 @@ public class ProfileController {
 
     @FXML
     public void initialize() {
+
+        refreshView();
+
         // Carica i dati dell'utente dal JSON
         viewModel.loadUserData();
 
@@ -45,7 +46,7 @@ public class ProfileController {
 
         // Imposta i campi di testo con i dati correnti
         fullNameField.setText(viewModel.getFullName());
-        nickNameField.setText(viewModel.getNickName());
+        usernameField.setText(viewModel.getUsername());
         // Se desideri mostrare il genere, aggiorna anche il modello User e il relativo metodo getter/setter
         countryField.setText(viewModel.getCountry());
         currentPasswordField.setText(viewModel.getPassword());
@@ -59,6 +60,7 @@ public class ProfileController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        refreshView();
 
         // Modalità di default: visualizzazione (campi non editabili)
         setEditMode(false);
@@ -71,7 +73,6 @@ public class ProfileController {
                 viewModel.setPassword(newPasswordField.getText());
             }
             viewModel.setFullName(fullNameField.getText());
-            viewModel.setNickName(nickNameField.getText());
             viewModel.setCountry(countryField.getText());
             viewModel.setLanguage(languageComboBox.getValue());
             // Se hai implementato il genere e il fuso orario, aggiorna anche questi campi:
@@ -90,10 +91,8 @@ public class ProfileController {
 
     private void setEditMode(boolean editing) {
         fullNameField.setDisable(!editing);
-        nickNameField.setDisable(!editing);
-        genderField.setDisable(!editing);
+        usernameField.setDisable(!editing);
         countryField.setDisable(!editing);
-        timeZoneField.setDisable(!editing);
         languageComboBox.setDisable(!editing);
         // Il campo della password corrente rimane disabilitato
         currentPasswordField.setDisable(true);
@@ -101,5 +100,19 @@ public class ProfileController {
 
         editButton.setDisable(editing);
         saveButton.setDisable(!editing);
+    }
+
+    private void refreshView() {
+        // Ricarica i dati (potrebbe essere utile ricaricare da repository se il JSON è stato aggiornato)
+        viewModel.loadUserData();
+        fullNameLabel.setText(viewModel.getFullName());
+        emailLabel.setText(viewModel.getEmail());
+
+        fullNameField.setText(viewModel.getFullName());
+        usernameField.setText(viewModel.getUsername());
+        countryField.setText(viewModel.getCountry());
+        languageComboBox.setValue(viewModel.getLanguage());
+        currentPasswordField.setText(viewModel.getPassword());
+        newPasswordField.clear();
     }
 }

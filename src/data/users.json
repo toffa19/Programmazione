@@ -4,64 +4,60 @@
     "username" : "mario.rossi",
     "password" : "mario",
     "firstName" : "Mario",
-    "lastName" : "Rossi",
     "email" : "mario.rossi@example.com",
+    "country" : "",
+    "language" : "",
     "progress" : [ {
-      "macroTopic" : "MacroTopic1",
-      "difficulty" : "facile",
+      "macroTopic" : "Basics",
       "questionResults" : [ {
-        "questionId" : "MT1_F1",
+        "questionId" : "BAS_F1",
         "attempts" : 1,
-        "time" : "00:01:20",
         "correct" : true
       }, {
-        "questionId" : "MT1_F2",
-        "attempts" : 2,
-        "time" : "00:01:45",
+        "questionId" : "BAS_F2",
+        "attempts" : 1,
+        "correct" : true
+      }, {
+        "questionId" : "BAS_F3",
+        "attempts" : 1,
+        "correct" : true
+      }, {
+        "questionId" : "BAS_M1",
+        "attempts" : 1,
         "correct" : false
       }, {
-        "questionId" : "MT1_F3",
+        "questionId" : "BAS_M2",
         "attempts" : 1,
-        "time" : "00:00:50",
-        "correct" : true
-      } ],
-      "score" : 90
-    }, {
-      "macroTopic" : "MacroTopic2",
-      "difficulty" : "medio",
-      "questionResults" : [ {
-        "questionId" : "MT2_M1",
-        "attempts" : 1,
-        "time" : "00:02:00",
         "correct" : true
       }, {
-        "questionId" : "MT2_M2",
+        "questionId" : "BAS_M3",
         "attempts" : 1,
-        "time" : "00:01:30",
         "correct" : true
       }, {
-        "questionId" : "MT2_M3",
-        "attempts" : 3,
-        "time" : "00:02:15",
-        "correct" : false
+        "questionId" : "BAS_D1",
+        "attempts" : 1,
+        "correct" : true
+      }, {
+        "questionId" : "BAS_D2",
+        "attempts" : 1,
+        "correct" : true
+      }, {
+        "questionId" : "BAS_D3",
+        "attempts" : 1,
+        "correct" : true
       } ],
-      "score" : 80
+      "score" : 0,
+      "time" : "56",
+      "passed" : "true"
     } ]
   }, {
     "id" : "u002",
     "username" : "luca.verdi",
     "password" : "another_hashed_password",
     "firstName" : "Luca",
-    "lastName" : "Verdi",
     "email" : "luca.verdi@example.com",
+    "country" : "",
+    "language" : "",
     "progress" : [ ]
-  }, {
-    "id" : "u1742487595799",
-    "username" : "Toffa",
-    "password" : "Test1",
-    "firstName" : "Christian",
-    "lastName" : null,
-    "email" : null,
-    "progress" : null
   } ]
 }

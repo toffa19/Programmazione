@@ -1,5 +1,6 @@
 package com.progetto.view;
 
+import com.progetto.util.SessionManager;
 import com.progetto.viewmodel.LoginViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,24 +20,24 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        // Binding bidirezionale
+        // Binding bidirezionale per i campi di testo
+        // (Assicurati che LoginViewModel abbia proprietà adeguate oppure usa setText/getText)
         usernameField.textProperty().bindBidirectional(viewModel.usernameProperty());
         passwordField.textProperty().bindBidirectional(viewModel.passwordProperty());
 
         loginButton.setOnAction(e -> {
             if (viewModel.login()) {
-                // Login riuscito: naviga verso la Home
+                // L'utente loggato è già memorizzato nel SessionManager dal viewModel.login()
+                System.out.println("Login successful for user: " + SessionManager.getCurrentUserId());
                 try {
                     Parent homeRoot = FXMLLoader.load(getClass().getResource("/view/HomeView.fxml"));
                     Stage stage = (Stage) loginButton.getScene().getWindow();
                     stage.setScene(new Scene(homeRoot, 900, 600));
-                    // 900x600 è un esempio di dimensioni, modificale a tuo piacimento
                     stage.show();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             } else {
-                // Mostra un messaggio di errore
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Credenziali non valide!", ButtonType.OK);
                 alert.showAndWait();
             }
@@ -51,5 +52,14 @@ public class LoginController {
                 ex.printStackTrace();
             }
         });
+    }
+
+    // Una semplice utility per il binding bidirezionale
+    // (Implementazione semplificata; in alternativa usa le proprietà JavaFX nel LoginViewModel)
+    private static class SimpleStringPropertyWrapper extends javafx.beans.property.SimpleStringProperty {
+        public SimpleStringPropertyWrapper(java.util.function.Supplier<String> getter, java.util.function.Consumer<String> setter) {
+            super(getter.get());
+            addListener((obs, oldVal, newVal) -> setter.accept(newVal));
+        }
     }
 }

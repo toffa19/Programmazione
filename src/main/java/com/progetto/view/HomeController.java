@@ -2,10 +2,12 @@ package com.progetto.view;
 
 import com.progetto.viewmodel.ExercisesViewModel;
 import com.progetto.viewmodel.HomeViewModel;
+import com.progetto.viewmodel.MacroTopicModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -27,18 +29,15 @@ public class HomeController {
 
     @FXML
     public void initialize() {
-        // Binding per la precisione
         precisionLabel.textProperty().bind(viewModel.precisionProperty());
         viewModel.loadMacroTopics();
         createMacroTopicCards();
 
-        // Popola daysBox con placeholder
         for (int i = 1; i <= 5; i++) {
             Label dayLabel = new Label("Giorno " + i);
             daysBox.getChildren().add(dayLabel);
         }
 
-        // Naviga alla pagina Path quando si clicca sul pulsante
         pathButton.setOnAction(e -> {
             try {
                 Parent pathRoot = FXMLLoader.load(getClass().getResource("/view/PathView.fxml"));
@@ -50,7 +49,6 @@ public class HomeController {
             }
         });
 
-        // Gestione del click sull'icona del profilo
         profileIcon.setOnMouseClicked(e -> {
             try {
                 Parent profileRoot = FXMLLoader.load(getClass().getResource("/view/ProfileView.fxml"));
@@ -62,7 +60,6 @@ public class HomeController {
             }
         });
 
-        // Imposta l'immagine del profilo dal classpath
         try {
             profileIcon.setImage(new Image(getClass().getResourceAsStream("/assets/images/profile.png")));
         } catch (Exception ex) {
@@ -77,18 +74,28 @@ public class HomeController {
             card.setStyle("-fx-background-color: #ffffff; -fx-padding: 10; "
                     + "-fx-border-radius: 5; -fx-background-radius: 5; "
                     + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 0);");
-            card.setOnMouseClicked(e -> {
-                // Imposta il topic selezionato nel ViewModel degli esercizi e naviga alla schermata degli esercizi
-                ExercisesViewModel.setSelectedTopic(topic.getTitle());
-                try {
-                    Parent exercisesRoot = FXMLLoader.load(getClass().getResource("/view/ExercisesView.fxml"));
-                    Stage stage = (Stage) card.getScene().getWindow();
-                    stage.setScene(new Scene(exercisesRoot, 900, 600));
-                    stage.show();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            });
+            // Se il topic non è sbloccato, disabilita l'azione e applica uno stile diverso (es. opacità ridotta)
+            if (!topic.isUnlocked()) {
+                card.setStyle(card.getStyle() + " -fx-opacity: 0.5;");
+                card.setOnMouseClicked(e -> {
+                    // Visualizza un messaggio che il topic non è sbloccato
+                    Alert alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION,
+                            "Completa il topic precedente per sbloccare questo livello!", javafx.scene.control.ButtonType.OK);
+                    alert.showAndWait();
+                });
+            } else {
+                card.setOnMouseClicked(e -> {
+                    ExercisesViewModel.setSelectedTopic(topic.getTitle());
+                    try {
+                        Parent exercisesRoot = FXMLLoader.load(getClass().getResource("/view/ExercisesView.fxml"));
+                        Stage stage = (Stage) card.getScene().getWindow();
+                        stage.setScene(new Scene(exercisesRoot, 900, 600));
+                        stage.show();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+            }
 
             ImageView imgView = new ImageView();
             imgView.setFitHeight(80);
