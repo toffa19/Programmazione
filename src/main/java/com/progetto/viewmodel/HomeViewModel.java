@@ -1,6 +1,6 @@
 package com.progetto.viewmodel;
 
-import com.progetto.model.MultipleChoiceExercise;
+import com.progetto.model.QuestionResult;
 import com.progetto.model.User;
 import com.progetto.repository.ExerciseRepository;
 import com.progetto.repository.UserRepository;
@@ -10,86 +10,77 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HomeViewModel {
 
-    private final ExerciseRepository exerciseRepository;
-    private final UserRepository userRepository;
-    private final ObservableList<MacroTopicModel> macroTopics;
-    private final StringProperty precision = new SimpleStringProperty("Precisione: X / 100");
+    private final UserRepository userRepo = new UserRepository();
+    private final ExerciseRepository exRepo = new ExerciseRepository();
 
-    public HomeViewModel() {
-        exerciseRepository = new ExerciseRepository();
-        userRepository = new UserRepository();
-        macroTopics = FXCollections.observableArrayList();
+    private final StringProperty consecutiveDays   = new SimpleStringProperty("0");
+    private final StringProperty completionPercent = new SimpleStringProperty("0%");
+    private final ObservableList<ScoreModel> leaderboard = FXCollections.observableArrayList();
+
+    public StringProperty consecutiveDaysProperty() { return consecutiveDays; }
+    public StringProperty completionProperty()     { return completionPercent; }
+    public ObservableList<ScoreModel> getLeaderboard() { return leaderboard; }
+
+    public void loadStatsAndLeaderboard() {
+        var currentUserId = SessionManager.getCurrentUserId();
+        User user = userRepo.getAllUsers().stream()
+                .filter(u -> currentUserId.equals(u.getId()))
+                .findFirst()
+                .orElse(new User());
+
+        computeConsecutiveDays(user.getId());
+        computeCompletion(user);
+        loadLeaderboard();
     }
 
-    public void loadMacroTopics() {
-        macroTopics.clear();
-        var exercises = exerciseRepository.getAllExercises();
-        if (exercises == null) {
-            System.out.println("[LOG] Nessun esercizio trovato nel JSON.");
-            return;
+    private void computeConsecutiveDays(String userId) {
+        List<LocalDate> logins = SessionManager.getLoginDates(userId);
+        LocalDate today = LocalDate.now();
+        int streak = 0;
+        while (logins.contains(today.minusDays(streak))) {
+            streak++;
         }
+        consecutiveDays.set(String.valueOf(streak));
+    }
 
-        Set<String> usedTopics = new HashSet<>();
-        for (MultipleChoiceExercise exercise : exercises) {
-            String topic = exercise.getMacroTopic();
-            if (!usedTopics.contains(topic)) {
-                usedTopics.add(topic);
-                String imageUrl = getImageForTopic(topic);
-                MacroTopicModel model = new MacroTopicModel(topic, imageUrl);
-                macroTopics.add(model);
-            }
+    private void computeCompletion(User user) {
+        Set<String> allTopics = exRepo.getAllExercises()
+                .stream()
+                .map(e -> e.getMacroTopic())
+                .collect(Collectors.toSet());
+        long passed = 0;
+        if (user.getProgress() != null) {
+            passed = user.getProgress().stream()
+                    .filter(p -> p.isPassed())
+                    .count();
         }
-        List<MacroTopicModel> topicsList = new ArrayList<>(macroTopics);
-        String currentUserId = SessionManager.getCurrentUserId();
-        User currentUser = null;
-        for (User u : userRepository.getAllUsers()) {
-            if (u.getId() != null && u.getId().equals(currentUserId)) {
-                currentUser = u;
-                break;
-            }
-        }
-        if (currentUser == null) {
-            currentUser = new User();
-        }
-        // Il primo topic è sbloccato per default
-        for (int i = 0; i < topicsList.size(); i++) {
-            MacroTopicModel topicModel = topicsList.get(i);
-            if (i == 0) {
-                topicModel.setUnlocked(true);
-            } else {
-                boolean previousPassed = false;
-                String previousTopicTitle = topicsList.get(i - 1).getTitle();
-                if (currentUser.getProgress() != null) {
-                    for (var prog : currentUser.getProgress()) {
-                        if (prog.getMacroTopic().equalsIgnoreCase(previousTopicTitle)) {
-                            if (prog.isPassed()) {
-                                previousPassed = true;
-                                break;
-                            }
+        int pct = allTopics.isEmpty() ? 0 : (int)(passed * 100.0 / allTopics.size());
+        completionPercent.set(pct + "%");
+    }
+
+    private void loadLeaderboard() {
+        leaderboard.clear();
+        for (User u : userRepo.getAllUsers()) {
+            int pts = 0;
+            if (u.getProgress() != null) {
+                for (var prog : u.getProgress()) {
+                    if (prog.getQuestionResults() != null) {
+                        for (QuestionResult qr : prog.getQuestionResults()) {
+                            if (qr.isCorrect()) pts += 10;
                         }
                     }
                 }
-                topicModel.setUnlocked(previousPassed);
             }
+            leaderboard.add(new ScoreModel(u.getUsername(), pts));
         }
-    }
-
-    public ObservableList<MacroTopicModel> getMacroTopics() {
-        return macroTopics;
-    }
-
-    public StringProperty precisionProperty() {
-        return precision;
-    }
-
-    private String getImageForTopic(String topic) {
-        return "https://via.placeholder.com/80.png?text=" + topic;
+        FXCollections.sort(leaderboard, Comparator.comparingInt(ScoreModel::getPoints).reversed());
     }
 }

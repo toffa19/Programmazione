@@ -1,53 +1,86 @@
 package com.progetto.viewmodel;
 
 import com.progetto.model.MultipleChoiceExercise;
+import com.progetto.model.Progress;
+import com.progetto.model.User;
 import com.progetto.repository.ExerciseRepository;
+import com.progetto.repository.UserRepository;
+import com.progetto.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.LinkedHashSet;
 
 public class PathViewModel {
 
     private final ExerciseRepository exerciseRepository;
-    private final ObservableList<TopicModel> topics;
+    private final UserRepository userRepository;
+    private final ObservableList<MacroTopicModel> topics;
 
     public PathViewModel() {
         exerciseRepository = new ExerciseRepository();
-        topics = FXCollections.observableArrayList();
+        userRepository    = new UserRepository();
+        topics            = FXCollections.observableArrayList();
     }
 
     /**
-     * Carica i topic dal JSON degli esercizi.
-     * Per ogni esercizio, estrae il macroTopic e crea un TopicModel solo se non è già presente.
-     * Per semplicità, il lessonCount viene impostato come il numero di domande nel livello "facile"
-     * e il primo topic viene sbloccato, mentre gli altri sono inizialmente bloccati.
+     * Carica i macro-topic in ordine di apparizione e li sblocca
+     * solo se l’utente corrente ha passato (prog.isPassed()==true)
+     * il topic precedente.
      */
     public void loadPathTopics() {
         topics.clear();
-        var allExercises = exerciseRepository.getAllExercises();
-        if (allExercises != null) {
-            Set<String> uniqueTopics = new HashSet<>();
-            for (MultipleChoiceExercise ex : allExercises) {
-                String macroTopic = ex.getMacroTopic();
-                if (!uniqueTopics.contains(macroTopic)) {
-                    uniqueTopics.add(macroTopic);
-                    int lessonCount = 0;
-                    if (ex.getLevels().containsKey("facile")) {
-                        lessonCount = ex.getLevels().get("facile").size();
-                    }
-                    int practiceCount = 0; // Puoi aggiornare questa logica in base al numero di esercizi completati
-                    // Il primo topic viene sbloccato, gli altri bloccati (puoi modificare la logica)
-                    boolean unlocked = topics.isEmpty();
-                    TopicModel topicModel = new TopicModel(macroTopic, "Descrizione di " + macroTopic, lessonCount, practiceCount, unlocked);
-                    topics.add(topicModel);
-                }
+
+        var exercises = exerciseRepository.getAllExercises();
+        if (exercises == null) return;
+
+        // mantengo ordine di prima occorrenza
+        Set<String> unique = new LinkedHashSet<>();
+        for (var ex : exercises) {
+            unique.add(ex.getMacroTopic());
+        }
+        List<String> titles = new ArrayList<>(unique);
+
+        // recupera utente corrente
+        String userId = SessionManager.getCurrentUserId();
+        Optional<User> optU = userRepository.getAllUsers()
+                .stream()
+                .filter(u -> userId.equals(u.getId()))
+                .findFirst();
+        User currentUser = optU.orElse(null);
+
+        for (int i = 0; i < titles.size(); i++) {
+            String title = titles.get(i);
+            String imageUrl = getImageForTopic(title);
+            MacroTopicModel m = new MacroTopicModel(title, imageUrl);
+
+            // sblocco il primo sempre
+            if (i == 0) {
+                m.setUnlocked(true);
+            } else if (currentUser != null) {
+                String prevTitle = titles.get(i - 1);
+                Optional<Progress> prog = currentUser.getProgress() == null
+                        ? Optional.empty()
+                        : currentUser.getProgress()
+                        .stream()
+                        .filter(p -> p.getMacroTopic().equalsIgnoreCase(prevTitle))
+                        .findFirst();
+                // sblocco se passato
+                m.setUnlocked(prog.isPresent() && prog.get().isPassed());
             }
+            topics.add(m);
         }
     }
 
-    public ObservableList<TopicModel> getTopics() {
+    public ObservableList<MacroTopicModel> getTopics() {
         return topics;
+    }
+
+    private String getImageForTopic(String topic) {
+        return "https://via.placeholder.com/80.png?text=" + topic;
     }
 }

@@ -17,15 +17,28 @@
             fx:controller="com.progetto.view.ProfileController"
             stylesheets="@/assets/styles/profile.css">
 
-    <!-- HEADER -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #f2f2f2;">
             <padding>
                 <Insets top="10" right="20" bottom="10" left="20"/>
             </padding>
+
+            <!-- Pulsante Home -->
+            <Button fx:id="homeButton" text="Home"/>
+
+
+
+            <!-- Titolo -->
             <Label text="Profilo Utente" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <!-- Spazio elastico -->
+            <HBox HBox.hgrow="ALWAYS"/>
+
+            <!-- Icona profilo -->
+            <ImageView fx:id="profileIcon" fitWidth="24" fitHeight="24"/>
         </HBox>
     </top>
+
 
     <!-- CONTENUTO PRINCIPALE -->
     <center>
@@ -72,6 +85,9 @@
 
             <!-- Pulsanti di azione -->
             <HBox alignment="CENTER_RIGHT" spacing="10">
+                <!-- Pulsante Logout -->
+                <Button fx:id="logoutButton" text="Logout"/>
+
                 <Button fx:id="editButton" text="Edit"/>
                 <Button fx:id="saveButton" text="Save"/>
             </HBox>

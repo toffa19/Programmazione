@@ -1,21 +1,20 @@
 package com.progetto.view;
 
+import com.progetto.util.SessionManager;
 import com.progetto.viewmodel.ProfileViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class ProfileController {
 
+    @FXML private Button homeButton;
+    @FXML private Button logoutButton;      // ← nuovo
     @FXML private ImageView profileImage;
     @FXML private Label fullNameLabel;
     @FXML private Label emailLabel;
@@ -23,9 +22,9 @@ public class ProfileController {
     @FXML private TextField fullNameField;
     @FXML private TextField usernameField;
     @FXML private TextField countryField;
+    @FXML private PasswordField currentPasswordField;
+    @FXML private PasswordField newPasswordField;
     @FXML private ComboBox<String> languageComboBox;
-    @FXML private PasswordField currentPasswordField; // Campo per mostrare la password corrente (disabilitato)
-    @FXML private PasswordField newPasswordField;     // Campo per inserire la nuova password
 
     @FXML private Button editButton;
     @FXML private Button saveButton;
@@ -34,59 +33,32 @@ public class ProfileController {
 
     @FXML
     public void initialize() {
+        // … carica dati, imposta view/edit mode, ecc.
 
-        refreshView();
+        homeButton.setOnAction(e -> navigateTo("/view/HomeView.fxml"));
+        logoutButton.setOnAction(e -> {
+            // Pulisce sessione e torna al login
+            SessionManager.setCurrentUserId(null);
+            navigateTo("/view/LoginView.fxml");
+        });
 
-        // Carica i dati dell'utente dal JSON
-        viewModel.loadUserData();
+        editButton.setOnAction(e -> setEditMode(true));
+        saveButton.setOnAction(e -> {
+            // … salva dati
+            viewModel.saveUserData();
+            setEditMode(false);
+        });
+    }
 
-        // Imposta le label in modalità "view"
-        fullNameLabel.setText(viewModel.getFullName());
-        emailLabel.setText(viewModel.getEmail());
-
-        // Imposta i campi di testo con i dati correnti
-        fullNameField.setText(viewModel.getFullName());
-        usernameField.setText(viewModel.getUsername());
-        // Se desideri mostrare il genere, aggiorna anche il modello User e il relativo metodo getter/setter
-        countryField.setText(viewModel.getCountry());
-        currentPasswordField.setText(viewModel.getPassword());
-        // Popola il ComboBox con alcune lingue configurate
-        languageComboBox.getItems().addAll("English", "Italian", "Spanish", "German");
-        languageComboBox.setValue(viewModel.getLanguage());
-
-        // Carica l'immagine di profilo dal classpath
+    private void navigateTo(String fxmlPath) {
         try {
-            profileImage.setImage(new Image(getClass().getResourceAsStream("/assets/images/profile.png")));
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage st = (Stage) homeButton.getScene().getWindow();
+            st.setScene(new Scene(root, 900, 600));
+            st.show();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        refreshView();
-
-        // Modalità di default: visualizzazione (campi non editabili)
-        setEditMode(false);
-
-        // Gestione pulsanti
-        editButton.setOnAction(e -> setEditMode(true));
-        saveButton.setOnAction(e -> {
-            // Se viene inserita una nuova password, la utilizziamo; altrimenti si mantiene quella corrente.
-            if (!newPasswordField.getText().isEmpty()) {
-                viewModel.setPassword(newPasswordField.getText());
-            }
-            viewModel.setFullName(fullNameField.getText());
-            viewModel.setCountry(countryField.getText());
-            viewModel.setLanguage(languageComboBox.getValue());
-            // Se hai implementato il genere e il fuso orario, aggiorna anche questi campi:
-            // viewModel.setGender(genderField.getText());
-            // viewModel.setTimeZone(timeZoneField.getText());
-
-            // Salva i dati nel JSON
-            viewModel.saveUserData();
-
-            // Aggiorna le label
-            fullNameLabel.setText(viewModel.getFullName());
-            // Ritorna in modalità "view"
-            setEditMode(false);
-        });
     }
 
     private void setEditMode(boolean editing) {
@@ -94,25 +66,10 @@ public class ProfileController {
         usernameField.setDisable(!editing);
         countryField.setDisable(!editing);
         languageComboBox.setDisable(!editing);
-        // Il campo della password corrente rimane disabilitato
-        currentPasswordField.setDisable(true);
         newPasswordField.setDisable(!editing);
+        currentPasswordField.setDisable(true);
 
         editButton.setDisable(editing);
         saveButton.setDisable(!editing);
-    }
-
-    private void refreshView() {
-        // Ricarica i dati (potrebbe essere utile ricaricare da repository se il JSON è stato aggiornato)
-        viewModel.loadUserData();
-        fullNameLabel.setText(viewModel.getFullName());
-        emailLabel.setText(viewModel.getEmail());
-
-        fullNameField.setText(viewModel.getFullName());
-        usernameField.setText(viewModel.getUsername());
-        countryField.setText(viewModel.getCountry());
-        languageComboBox.setValue(viewModel.getLanguage());
-        currentPasswordField.setText(viewModel.getPassword());
-        newPasswordField.clear();
     }
 }

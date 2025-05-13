@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,46 +15,47 @@
             fx:controller="com.progetto.view.PathController"
             stylesheets="@/assets/styles/path.css">
 
-    <!-- HEADER (Top) con HBox -->
+    <!-- HEADER -->
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #f2f2f2;">
+        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f2f2f2;">
             <padding>
                 <Insets top="10" right="20" bottom="10" left="20"/>
             </padding>
-            <!-- Titolo della pagina -->
+
+            <!-- Pulsante Home -->
+            <Button fx:id="homeButton" text="Home"/>
+
+            <!-- Titolo -->
             <Label text="Percorso" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
             <!-- Spazio elastico -->
             <HBox HBox.hgrow="ALWAYS"/>
+
             <!-- Icona profilo -->
-            <ImageView fx:id="profileIcon" fitWidth="24" fitHeight="24" />
+            <ImageView fx:id="profileIcon" fitWidth="24" fitHeight="24"/>
+
         </HBox>
     </top>
 
-    <!-- Sezione Sinistra: Visualizzazione del Path -->
+    <!-- Sezione Sinistra: Path -->
     <left>
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
             <content>
-                <VBox fx:id="pathContainer" spacing="20" style="-fx-padding: 20;">
-                    <!-- Verrà popolato dinamicamente con i "nodi" del percorso -->
-                </VBox>
+                <VBox fx:id="pathContainer" spacing="20" style="-fx-padding: 20;"/>
             </content>
         </ScrollPane>
     </left>
 
-    <!-- Sezione Destra: Dettaglio del topic selezionato -->
+    <!-- Sezione Destra: Dettagli -->
     <center>
         <VBox fx:id="topicDetailContainer" spacing="10" style="-fx-padding: 20;">
-            <!-- Mostriamo nome, descrizione e magari un'immagine -->
             <Label fx:id="topicNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
             <Label fx:id="topicDescriptionLabel" wrapText="true"/>
             <Label fx:id="lessonCountLabel" style="-fx-font-size: 14px;"/>
             <Label fx:id="practiceCountLabel" style="-fx-font-size: 14px;"/>
-            <!-- Pulsante o informazioni aggiuntive -->
-            <Label text="(Altre info o pulsanti vanno qui)"/>
         </VBox>
     </center>
 
-    <!-- Footer (opzionale) -->
     <bottom>
         <Label text="Footer" style="-fx-background-color: #f2f2f2; -fx-padding: 10;"/>
     </bottom>

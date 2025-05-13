@@ -40,6 +40,10 @@ public class ProfileViewModel {
         return currentUser.getUsername() != null ? currentUser.getUsername() : "";
     }
 
+    public void setUsername(String username) {
+        currentUser.setUsername(username);
+    }
+
     public String getCountry() {
         return currentUser.getCountry() != null ? currentUser.getCountry() : "";
     }

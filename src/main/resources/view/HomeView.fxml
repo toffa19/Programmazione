@@ -1,82 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.progetto.view.HomeController"
-            stylesheets="@./../assets/styles/home.css">
+            stylesheets="@../assets/styles/home.css">
 
     <!-- HEADER -->
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #f2f2f2;">
-            <padding>
-                <Insets top="10" right="20" bottom="10" left="20"/>
-            </padding>
-            <!-- LOGO o Testo come placeholder -->
-            <Label text="LOGO" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            <Separator orientation="VERTICAL"/>
-            <!-- Pulsanti di navigazione -->
-            <Button text="Home" />
-            <Button fx:id="pathButton" text="Path" />
-            <!-- Icona utente -->
-            <ImageView fx:id="profileIcon" fitWidth="24" fitHeight="24" />
-            <!-- Spazio elastico -->
-            <HBox fx:id="spacer" HBox.hgrow="ALWAYS"/>
-            <!-- Frase ad effetto -->
-            <Label text="Frase ad effetto" style="-fx-font-style: italic;"/>
+        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f2f2f2;">
+            <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+            <Label text="LOGO" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+            <Button fx:id="homeButton" text="Home"/>
+            <Button fx:id="pathButton" text="Courses"/>
+            <HBox HBox.hgrow="ALWAYS"/>
+            <ImageView fx:id="profileIcon" fitWidth="24" fitHeight="24"/>
         </HBox>
     </top>
 
-    <!-- SEZIONE SINISTRA (giorni di slancio) -->
-    <left>
-        <VBox spacing="20" alignment="CENTER" style="-fx-background-color: #fafafa;">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-            <Label text="Giorni di Slancio" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-            <!-- Esempio di card per i giorni -->
-            <VBox fx:id="daysBox" spacing="10" alignment="CENTER">
-                <!-- Questo container verrà popolato dinamicamente se necessario -->
-            </VBox>
-            <Separator/>
-            <!-- Precisione X/100 -->
-            <Label fx:id="precisionLabel" text="Precisione: X / 100" style="-fx-font-size: 14px;"/>
-        </VBox>
-    </left>
-
-    <!-- CONTENUTO PRINCIPALE: macroTopic come card -->
+    <!-- CENTER: due aree affiancate -->
     <center>
-        <!-- ScrollPane per permettere lo scrolling se i card sono molti -->
-        <ScrollPane fitToWidth="true" style="-fx-background: transparent;">
-            <content>
-                <FlowPane fx:id="macroTopicContainer"
-                          alignment="CENTER"
-                          hgap="20" vgap="20"
-                          prefWrapLength="600"
-                          style="-fx-padding: 20;">
-                    <!-- I card verranno creati dinamicamente dal Controller/ViewModel -->
-                </FlowPane>
-            </content>
-        </ScrollPane>
+        <HBox spacing="40" style="-fx-padding:20;">
+            <!-- SINISTRA: statistiche utente -->
+            <VBox spacing="30" style="-fx-pref-width:250;">
+                <VBox spacing="5">
+                    <Label text="Giorni di accesso consecutivi" style="-fx-font-size:14px;"/>
+                    <Label fx:id="daysLabel" style="-fx-font-size:24px; -fx-font-weight:bold;"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Completamento (%)" style="-fx-font-size:14px;"/>
+                    <Label fx:id="completionLabel" style="-fx-font-size:24px; -fx-font-weight:bold;"/>
+                </VBox>
+            </VBox>
+
+            <!-- DESTRA: leaderboard -->
+            <VBox VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                <TableView fx:id="leaderboardTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="userCol"    text="Utente" prefWidth="200"/>
+                        <TableColumn fx:id="pointsCol"  text="Punti"  prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
     </center>
 
-    <!-- FOOTER -->
-    <bottom>
-        <HBox spacing="10" alignment="CENTER" style="-fx-background-color: #f2f2f2;">
-            <padding>
-                <Insets top="10" right="20" bottom="10" left="20"/>
-            </padding>
-            <Label text="FOOTER" />
-        </HBox>
-    </bottom>
 </BorderPane>
