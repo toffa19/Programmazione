@@ -2,8 +2,9 @@
   "users" : [ {
     "id" : "u001",
     "username" : "mario.rossi",
-    "password" : "mario",
+    "password" : "m",
     "firstName" : "Mario",
+    "lastName" : null,
     "email" : "mario.rossi@example.com",
     "country" : "",
     "language" : "",
@@ -91,15 +92,18 @@
       "score" : 0,
       "time" : "0",
       "passed" : true
-    } ]
+    } ],
+    "loginDates" : null
   }, {
     "id" : "u002",
     "username" : "luca.verdi",
     "password" : "another_hashed_password",
     "firstName" : "Luca",
+    "lastName" : null,
     "email" : "luca.verdi@example.com",
     "country" : "",
     "language" : "",
-    "progress" : [ ]
+    "progress" : [ ],
+    "loginDates" : null
   } ]
 }

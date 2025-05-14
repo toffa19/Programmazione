@@ -1,14 +1,22 @@
 package com.progetto.viewmodel;
 
-public class ScoreModel {
-    private final String username;
-    private final int points;
+import javafx.beans.property.*;
 
-    public ScoreModel(String username, int points) {
-        this.username = username;
-        this.points = points;
+public class ScoreModel {
+    private final StringProperty userId     = new SimpleStringProperty();
+    private final StringProperty username   = new SimpleStringProperty();
+    private final IntegerProperty points    = new SimpleIntegerProperty();
+
+    public ScoreModel(String userId, String username, int points) {
+        this.userId.set(userId);
+        this.username.set(username);
+        this.points.set(points);
     }
 
-    public String getUsername() { return username; }
-    public int getPoints()   { return points;   }
+    public String getUserId()     { return userId.get(); }
+    public String getUsername()   { return username.get(); }
+    public int    getPoints()     { return points.get(); }
+
+    public StringProperty usernameProperty() { return username; }
+    public IntegerProperty pointsProperty()  { return points; }
 }

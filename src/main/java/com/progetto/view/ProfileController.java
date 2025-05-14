@@ -2,6 +2,7 @@ package com.progetto.view;
 
 import com.progetto.util.SessionManager;
 import com.progetto.viewmodel.ProfileViewModel;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.List;
 
 public class ProfileController {
 
     @FXML private Button homeButton;
-    @FXML private Button logoutButton;      // ← nuovo
+    @FXML private Button logoutButton;
     @FXML private ImageView profileImage;
     @FXML private Label fullNameLabel;
     @FXML private Label emailLabel;
@@ -33,32 +38,48 @@ public class ProfileController {
 
     @FXML
     public void initialize() {
-        // … carica dati, imposta view/edit mode, ecc.
+        // 1) Popola il form con i dati correnti
+        viewModel.loadUserData();
+        fullNameLabel.setText(viewModel.getFullName());
+        emailLabel.setText(viewModel.getEmail());
+        usernameField.setText(viewModel.getUsername());
+        fullNameField.setText(viewModel.getFullName());
+        countryField.setText(viewModel.getCountry());
 
+        // Combo lingue
+        List<String> langs = List.of("Italiano","English","Español","Français");
+        languageComboBox.setItems(FXCollections.observableArrayList(langs));
+        languageComboBox.getSelectionModel().select(viewModel.getLanguage());
+
+        // Profile image (placeholder)
+        profileImage.setImage(new Image(
+                getClass().getResourceAsStream("/assets/images/profile.png")
+        ));
+
+        // 2) Navigazione
         homeButton.setOnAction(e -> navigateTo("/view/HomeView.fxml"));
         logoutButton.setOnAction(e -> {
-            // Pulisce sessione e torna al login
             SessionManager.setCurrentUserId(null);
             navigateTo("/view/LoginView.fxml");
         });
 
+        // 3) Edit/Save mode
         editButton.setOnAction(e -> setEditMode(true));
         saveButton.setOnAction(e -> {
-            // … salva dati
-            viewModel.saveUserData();
+            // aggiorna viewModel
+            viewModel.setFullName(fullNameField.getText());
+            viewModel.setUsername(usernameField.getText());
+            viewModel.setCountry(countryField.getText());
+            viewModel.setLanguage(languageComboBox.getValue());
+            if (!newPasswordField.getText().isBlank()) {
+                viewModel.setPassword(newPasswordField.getText());
+            }
+            viewModel.saveUserData();           // scrive su JSON :contentReference[oaicite:1]{index=1}:contentReference[oaicite:2]{index=2}
+            // aggiorna UI
+            fullNameLabel.setText(viewModel.getFullName());
+            usernameField.setText(viewModel.getUsername());
             setEditMode(false);
         });
-    }
-
-    private void navigateTo(String fxmlPath) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Stage st = (Stage) homeButton.getScene().getWindow();
-            st.setScene(new Scene(root, 900, 600));
-            st.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     private void setEditMode(boolean editing) {
@@ -67,9 +88,18 @@ public class ProfileController {
         countryField.setDisable(!editing);
         languageComboBox.setDisable(!editing);
         newPasswordField.setDisable(!editing);
-        currentPasswordField.setDisable(true);
-
-        editButton.setDisable(editing);
         saveButton.setDisable(!editing);
+        editButton.setDisable(editing);
+    }
+
+    private void navigateTo(String fxmlPath) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage st = (Stage) homeButton.getScene().getWindow();
+            st.setScene(new Scene(root, 900, 600));
+            st.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

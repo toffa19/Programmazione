@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 public class ExercisesController {
 
     @FXML private Label topicLabel;          // Visualizza il nome del topic
-    @FXML private Button backButton;         // Bottone "Home"
     @FXML private Button exitButton;         // Bottone "Esci dall’esercizio"
     @FXML private ScrollPane scrollPane;     // ScrollPane per il container degli esercizi
     @FXML private VBox exercisesContainer;   // Contenitore che mostra la domanda corrente
@@ -38,7 +37,7 @@ public class ExercisesController {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         exercisesContainer.prefWidthProperty().bind(scrollPane.widthProperty().subtract(20));
 
-        backButton.setOnAction(e -> navigateToHome());
+        exitButton.setOnAction(e -> navigateToHome());
         exitButton.setOnAction(e -> {
             viewModel.stopTimer();
             Alert alert = new Alert(Alert.AlertType.INFORMATION,

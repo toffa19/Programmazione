@@ -1,3 +1,4 @@
+// src/main/java/com/progetto/viewmodel/HomeViewModel.java
 package com.progetto.viewmodel;
 
 import com.progetto.model.QuestionResult;
@@ -23,14 +24,16 @@ public class HomeViewModel {
 
     private final StringProperty consecutiveDays   = new SimpleStringProperty("0");
     private final StringProperty completionPercent = new SimpleStringProperty("0%");
+    private final StringProperty rank              = new SimpleStringProperty("-");
     private final ObservableList<ScoreModel> leaderboard = FXCollections.observableArrayList();
 
     public StringProperty consecutiveDaysProperty() { return consecutiveDays; }
     public StringProperty completionProperty()     { return completionPercent; }
+    public StringProperty rankProperty()           { return rank; }
     public ObservableList<ScoreModel> getLeaderboard() { return leaderboard; }
 
     public void loadStatsAndLeaderboard() {
-        var currentUserId = SessionManager.getCurrentUserId();
+        String currentUserId = SessionManager.getCurrentUserId();
         User user = userRepo.getAllUsers().stream()
                 .filter(u -> currentUserId.equals(u.getId()))
                 .findFirst()
@@ -39,6 +42,7 @@ public class HomeViewModel {
         computeConsecutiveDays(user.getId());
         computeCompletion(user);
         loadLeaderboard();
+        computeRank(currentUserId);
     }
 
     private void computeConsecutiveDays(String userId) {
@@ -52,8 +56,7 @@ public class HomeViewModel {
     }
 
     private void computeCompletion(User user) {
-        Set<String> allTopics = exRepo.getAllExercises()
-                .stream()
+        Set<String> allTopics = exRepo.getAllExercises().stream()
                 .map(e -> e.getMacroTopic())
                 .collect(Collectors.toSet());
         long passed = 0;
@@ -79,8 +82,19 @@ public class HomeViewModel {
                     }
                 }
             }
-            leaderboard.add(new ScoreModel(u.getUsername(), pts));
+            // Passo ora userId, username e punti: risolve il mismatch di costruttore :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
+            leaderboard.add(new ScoreModel(u.getId(), u.getUsername(), pts));
         }
         FXCollections.sort(leaderboard, Comparator.comparingInt(ScoreModel::getPoints).reversed());
+    }
+
+    private void computeRank(String userId) {
+        for (int i = 0; i < leaderboard.size(); i++) {
+            if (leaderboard.get(i).getUserId().equals(userId)) {
+                rank.set((i + 1) + "°");
+                return;
+            }
+        }
+        rank.set("-");
     }
 }

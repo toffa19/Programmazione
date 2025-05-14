@@ -2,56 +2,100 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.progetto.view.HomeController"
-            stylesheets="@../assets/styles/home.css">
+            stylesheets="@../assets/styles/home.css"
+            prefWidth="1000" prefHeight="700">
 
-    <!-- HEADER -->
+    <!-- HEADER CARD -->
     <top>
-        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f2f2f2;">
-            <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-            <Label text="LOGO" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
-            <Button fx:id="homeButton" text="Home"/>
-            <Button fx:id="pathButton" text="Courses"/>
-            <HBox HBox.hgrow="ALWAYS"/>
-            <ImageView fx:id="profileIcon" fitWidth="24" fitHeight="24"/>
+        <HBox styleClass="card-container header-card" alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="15" right="30" bottom="15" left="30"/>
+            </padding>
+            <Label text="🏠 Dashboard" styleClass="header-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <ImageView fx:id="profileIcon"
+                       fitWidth="40" fitHeight="40"
+                       styleClass="avatar"/>
         </HBox>
     </top>
 
-    <!-- CENTER: due aree affiancate -->
+    <!-- MAIN CONTENT: DUE COLONNE -->
     <center>
-        <HBox spacing="40" style="-fx-padding:20;">
-            <!-- SINISTRA: statistiche utente -->
-            <VBox spacing="30" style="-fx-pref-width:250;">
-                <VBox spacing="5">
-                    <Label text="Giorni di accesso consecutivi" style="-fx-font-size:14px;"/>
-                    <Label fx:id="daysLabel" style="-fx-font-size:24px; -fx-font-weight:bold;"/>
+        <HBox spacing="30" alignment="TOP_CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- COLONNA SINISTRA -->
+            <VBox spacing="25">
+
+                <!-- STATS SECTION CARD -->
+                <VBox styleClass="card-container stats-section" spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <HBox spacing="15" alignment="CENTER">
+                        <!-- STAT 1 -->
+                        <VBox styleClass="stat-card" alignment="CENTER">
+                            <Label text="🔥 Streak" styleClass="stat-title"/>
+                            <Label fx:id="daysLabel" text="0" styleClass="stat-value"/>
+                            <Label text="giorni consecutivi" styleClass="stat-subtitle"/>
+                        </VBox>
+                        <!-- STAT 2 -->
+                        <VBox styleClass="stat-card" alignment="CENTER">
+                            <Label text="✅ Completamento" styleClass="stat-title"/>
+                            <Label fx:id="completionLabel" text="0 %" styleClass="stat-value"/>
+                            <Label text="attività completate" styleClass="stat-subtitle"/>
+                        </VBox>
+                        <!-- STAT 3 -->
+                        <VBox styleClass="stat-card" alignment="CENTER">
+                            <Label text="🌟 Posizione" styleClass="stat-title"/>
+                            <Label fx:id="rankLabel" text="–" styleClass="stat-value"/>
+                            <Label text="in classifica" styleClass="stat-subtitle"/>
+                        </VBox>
+                    </HBox>
                 </VBox>
-                <VBox spacing="5">
-                    <Label text="Completamento (%)" style="-fx-font-size:14px;"/>
-                    <Label fx:id="completionLabel" style="-fx-font-size:24px; -fx-font-weight:bold;"/>
+
+                <!-- ACTION SECTION CARD -->
+                <VBox styleClass="card-container action-section" alignment="CENTER" spacing="10">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Pronto per il prossimo corso?" styleClass="action-text"/>
+                    <Button fx:id="pathButton"
+                            text="▶️ Vai alla sezione Corsi"
+                            styleClass="btn-action"/>
                 </VBox>
+
             </VBox>
 
-            <!-- DESTRA: leaderboard -->
-            <VBox VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                <TableView fx:id="leaderboardTable" VBox.vgrow="ALWAYS">
+            <!-- COLONNA DESTRA: LEADERBOARD CARD -->
+            <VBox styleClass="card-container leaderboard-section" spacing="15" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="🏆 Classifica Top 10" styleClass="leaderboard-title"/>
+                <TableView fx:id="leaderboardTable"
+                           prefWidth="450" prefHeight="550"
+                           styleClass="leaderboard-table">
                     <columns>
-                        <TableColumn fx:id="userCol"    text="Utente" prefWidth="200"/>
-                        <TableColumn fx:id="pointsCol"  text="Punti"  prefWidth="100"/>
+                        <TableColumn fx:id="userCol"   text="Utente" prefWidth="300"/>
+                        <TableColumn fx:id="pointsCol" text="Punti"   prefWidth="120"/>
                     </columns>
                 </TableView>
             </VBox>
+
         </HBox>
     </center>
 

@@ -17,7 +17,7 @@
                 <Insets top="10" right="20" bottom="10" left="20"/>
             </padding>
             <Button fx:id="exitButton" text="Esci dall’esercizio"/>
-            <Button fx:id="backButton" text="Home"/>
+<!--            <Button fx:id="backButton" text="Home"/>-->
             <Label fx:id="topicLabel" text="Topic Name" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
         </HBox>
     </top>

@@ -2,15 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nomeazienda</groupId>
     <artifactId>progetto</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <properties>
         <java.version>17</java.version>
         <javafx.version>17.0.2</javafx.version>
+        <jfoenix.version>9.0.10</jfoenix.version>
     </properties>
+
     <dependencies>
         <!-- JavaFX Controls -->
         <dependency>
@@ -18,12 +22,21 @@
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+
         <!-- JavaFX FXML -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+
+        <!-- JFoenix: Material-design library per JavaFX -->
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>${jfoenix.version}</version>
+        </dependency>
+
         <!-- Jackson per la serializzazione JSON -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -31,8 +44,16 @@
             <version>2.13.3</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
+            <!-- Compilazione Java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -42,7 +63,8 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            <!-- Plugin per eseguire l'applicazione JavaFX -->
+
+            <!-- Plugin JavaFX per eseguire l’applicazione -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
