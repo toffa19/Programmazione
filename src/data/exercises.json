@@ -1,618 +1,661 @@
 {
-  "exercises": [
-    {
-      "macroTopic": "Basics",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "BAS_F1",
-            "question": "Da quale indice parte un array in Java?",
-            "options": ["0", "1", "-1", "Dipende dalla JVM"],
-            "correctAnswer": "0"
-          },
-          {
-            "questionId": "BAS_F2",
-            "question": "Quale parola chiave si usa per dichiarare una costante in Java?",
-            "options": ["constant", "final", "var", "static"],
-            "correctAnswer": "final"
-          },
-          {
-            "questionId": "BAS_F3",
-            "question": "Quale tipo di dato viene usato per un singolo carattere in Java?",
-            "options": ["char", "string", "Character", "byte"],
-            "correctAnswer": "char"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "BAS_M1",
-            "question": "Cosa fa il compilatore Java?",
-            "options": ["Interpreta il codice sorgente", "Compila il codice in bytecode", "Esegue direttamente il codice", "Converte Java in Assembly"],
-            "correctAnswer": "Compila il codice in bytecode"
-          },
-          {
-            "questionId": "BAS_M2",
-            "question": "Cosa significa 'JVM'?",
-            "options": ["Java Variable Machine", "Java Virtual Machine", "Java Versatile Memory", "Java Verified Module"],
-            "correctAnswer": "Java Virtual Machine"
-          },
-          {
-            "questionId": "BAS_M3",
-            "question": "Qual è il risultato di 10 / 3 in Java se entrambi sono interi?",
-            "options": ["3.33", "3", "4", "Errore"],
-            "correctAnswer": "3"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "BAS_D1",
-            "question": "Quale di questi modificatori di accesso permette la visibilità solo all'interno dello stesso package?",
-            "options": ["private", "protected", "public", "(default)"],
-            "correctAnswer": "(default)"
-          },
-          {
-            "questionId": "BAS_D2",
-            "question": "Cosa succede se il metodo main() di una classe non è dichiarato static?",
-            "options": ["Compila ma non si esegue", "Errore di compilazione", "Viene eseguito normalmente", "Si esegue ma senza output"],
-            "correctAnswer": "Errore di compilazione"
-          },
-          {
-            "questionId": "BAS_D3",
-            "question": "Quale eccezione viene sollevata se si tenta di accedere a un indice inesistente di un array?",
-            "options": ["NullPointerException", "ArrayIndexOutOfBoundsException", "IndexException", "OutOfMemoryError"],
-            "correctAnswer": "ArrayIndexOutOfBoundsException"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "Loops and Iterations",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "LOOP_F1",
-            "question": "Come si scrive un ciclo for in Java?",
-            "options": ["for(int i=0; i<10; i++)", "for(i=0; i<10; i++)", "for(int i=0; i<=10; i++)", "while(i<10)"],
-            "correctAnswer": "for(int i=0; i<10; i++)"
-          },
-          {
-            "questionId": "LOOP_F2",
-            "question": "Quale di queste è una condizione di uscita di un ciclo while?",
-            "options": ["i==10", "i<10", "i>10", "Tutti i precedenti"],
-            "correctAnswer": "i==10"
-          },
-          {
-            "questionId": "LOOP_F3",
-            "question": "Quale tipo di ciclo in Java si ripete un numero di volte determinato?",
-            "options": ["for", "while", "do-while", "Tutti i precedenti"],
-            "correctAnswer": "for"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "LOOP_M1",
-            "question": "Quale sarà il risultato di questo ciclo for? 'for(int i=1; i<=5; i++) System.out.println(i);'",
-            "options": ["1 2 3 4 5", "0 1 2 3 4", "1 2 3 4", "5 4 3 2 1"],
-            "correctAnswer": "1 2 3 4 5"
-          },
-          {
-            "questionId": "LOOP_M2",
-            "question": "Che tipo di ciclo dovresti usare se non conosci a priori il numero di iterazioni?",
-            "options": ["for", "while", "do-while", "None of the above"],
-            "correctAnswer": "while"
-          },
-          {
-            "questionId": "LOOP_M3",
-            "question": "Cosa farà il seguente codice? 'int i=0; while(i<3) { System.out.println(i); i++; }'",
-            "options": ["Stampa 0, 1, 2", "Stampa 1, 2, 3", "Stampa 1", "Errore"],
-            "correctAnswer": "Stampa 0, 1, 2"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "LOOP_D1",
-            "question": "Qual è la differenza principale tra il ciclo for e il ciclo while in Java?",
-            "options": ["Nessuna differenza", "Il ciclo for è usato solo per contare", "Il ciclo while ha una condizione di terminazione prima dell'esecuzione", "Il ciclo for ha una condizione di terminazione prima dell'esecuzione"],
-            "correctAnswer": "Il ciclo while ha una condizione di terminazione prima dell'esecuzione"
-          },
-          {
-            "questionId": "LOOP_D2",
-            "question": "Quale sarà il risultato del seguente ciclo: 'for(int i=0; i<5; i++) { if(i%2==0) continue; System.out.println(i); }'",
-            "options": ["1 3", "0 2 4", "1 2 3 4", "1 2 3 4 5"],
-            "correctAnswer": "1 3"
-          },
-          {
-            "questionId": "LOOP_D3",
-            "question": "Come può essere interrotto un ciclo in Java prima del termine naturale?",
-            "options": ["break", "exit", "return", "stop"],
-            "correctAnswer": "break"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "DataStructures",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "DS_F1",
-            "question": "What is an array in Java?",
-            "options": ["A collection of elements of different types", "A collection of elements of the same type", "A type of list", "A method to store data"],
-            "correctAnswer": "A collection of elements of the same type"
-          },
-          {
-            "questionId": "DS_F2",
-            "question": "How do you declare an array in Java?",
-            "options": ["int[] arr;", "int arr[];", "Both of the above", "int array[];"],
-            "correctAnswer": "Both of the above"
-          },
-          {
-            "questionId": "DS_F3",
-            "question": "Which of the following is an ordered collection in Java?",
-            "options": ["ArrayList", "HashMap", "HashSet", "TreeSet"],
-            "correctAnswer": "ArrayList"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "DS_M1",
-            "question": "What is the time complexity of accessing an element in an array by index?",
-            "options": ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
-            "correctAnswer": "O(1)"
-          },
-          {
-            "questionId": "DS_M2",
-            "question": "Which data structure would you use to store key-value pairs in Java?",
-            "options": ["Array", "LinkedList", "HashMap", "Stack"],
-            "correctAnswer": "HashMap"
-          },
-          {
-            "questionId": "DS_M3",
-            "question": "Which of the following is a correct statement about an ArrayList in Java?",
-            "options": ["It can hold elements of different types", "It automatically resizes when it exceeds its capacity", "It is slower than arrays", "It doesn't allow null values"],
-            "correctAnswer": "It automatically resizes when it exceeds its capacity"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "DS_D1",
-            "question": "What is the time complexity of searching for an element in a HashMap?",
-            "options": ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
-            "correctAnswer": "O(1)"
-          },
-          {
-            "questionId": "DS_D2",
-            "question": "Which of the following is true about a LinkedList?",
-            "options": ["It allows fast random access", "It is implemented as an array", "It uses pointers to link elements", "It can store only one type of object"],
-            "correctAnswer": "It uses pointers to link elements"
-          },
-          {
-            "questionId": "DS_D3",
-            "question": "Which of the following collections guarantees the order of insertion?",
-            "options": ["HashSet", "LinkedHashSet", "TreeSet", "HashMap"],
-            "correctAnswer": "LinkedHashSet"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "Debugging",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "DEBUG_F1",
-            "question": "What is the cause of this error? 'int[] arr = new int[5]; arr[5] = 10;'",
-            "options": ["ArrayIndexOutOfBoundsException", "NullPointerException", "SyntaxError", "TypeMismatchException"],
-            "correctAnswer": "ArrayIndexOutOfBoundsException"
-          },
-          {
-            "questionId": "DEBUG_F2",
-            "question": "What is the result of the following code: 'System.out.println(10/0);'",
-            "options": ["Infinity", "ArithmeticException", "NaN", "0"],
-            "correctAnswer": "ArithmeticException"
-          },
-          {
-            "questionId": "DEBUG_F3",
-            "question": "What would happen if we tried to call a method on a null object?",
-            "options": ["NullPointerException", "No output", "Method call is ignored", "Program exits"],
-            "correctAnswer": "NullPointerException"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "DEBUG_M1",
-            "question": "How would you fix this error? 'String s = null; s.length();'",
-            "options": ["Check if s is null before calling length()", "Assign an empty string to s", "Use the toUpperCase() method", "Change the type of s to StringBuilder"],
-            "correctAnswer": "Check if s is null before calling length()"
-          },
-          {
-            "questionId": "DEBUG_M2",
-            "question": "What does the following code throw? 'int[] arr = null; arr[0] = 1;'",
-            "options": ["NullPointerException", "ArrayIndexOutOfBoundsException", "RuntimeException", "ClassCastException"],
-            "correctAnswer": "NullPointerException"
-          },
-          {
-            "questionId": "DEBUG_M3",
-            "question": "What is the result of the code 'int x = 10; if(x > 5) { System.out.println(\"True\"); } else { System.out.println(\"False\"); }'",
-            "options": ["True", "False", "Error", "Nothing is printed"],
-            "correctAnswer": "True"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "DEBUG_D1",
-            "question": "What is the error in the following code? 'public class Test { public static void main(String[] args) { System.out.println(10/0); } }'",
-            "options": ["ArithmeticException", "NullPointerException", "ClassNotFoundException", "IOException"],
-            "correctAnswer": "ArithmeticException"
-          },
-          {
-            "questionId": "DEBUG_D2",
-            "question": "What does the following code throw? 'int[] arr = new int[5]; arr[10] = 1;'",
-            "options": ["ArrayIndexOutOfBoundsException", "IndexOutOfBoundsException", "NullPointerException", "OutOfMemoryError"],
-            "correctAnswer": "ArrayIndexOutOfBoundsException"
-          },
-          {
-            "questionId": "DEBUG_D3",
-            "question": "Which error would be thrown by the code? 'String str = \"Hello\"; int length = str[0];'",
-            "options": ["TypeMismatchException", "NullPointerException", "ArrayIndexOutOfBoundsException", "StringIndexOutOfBoundsException"],
-            "correctAnswer": "TypeMismatchException"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "Exceptions",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "EXC_F1",
-            "question": "What is the purpose of the 'try-catch' block?",
-            "options": ["To handle exceptions", "To create exceptions", "To create a loop", "To terminate a program"],
-            "correctAnswer": "To handle exceptions"
-          },
-          {
-            "questionId": "EXC_F2",
-            "question": "Which of the following is the superclass of all exceptions?",
-            "options": ["Error", "Throwable", "Exception", "RuntimeException"],
-            "correctAnswer": "Throwable"
-          },
-          {
-            "questionId": "EXC_F3",
-            "question": "What happens when an exception is not caught?",
-            "options": ["The program stops execution", "The exception is ignored", "The program continues normally", "The exception is automatically fixed"],
-            "correctAnswer": "The program stops execution"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "EXC_M1",
-            "question": "What will happen if we throw a checked exception without declaring it in the method signature?",
-            "options": ["Compiling error", "Runtime exception", "The exception is caught automatically", "No effect"],
-            "correctAnswer": "Compiling error"
-          },
-          {
-            "questionId": "EXC_M2",
-            "question": "Which exception is thrown when a method is invoked on a null object?",
-            "options": ["NullPointerException", "ArrayIndexOutOfBoundsException", "ClassCastException", "ArithmeticException"],
-            "correctAnswer": "NullPointerException"
-          },
-          {
-            "questionId": "EXC_M3",
-            "question": "Which block is used to define a cleanup section in a try-catch statement?",
-            "options": ["finally", "cleanup", "finally block", "catch block"],
-            "correctAnswer": "finally"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "EXC_D1",
-            "question": "Which type of exception is 'FileNotFoundException'?",
-            "options": ["Checked", "Unchecked", "RuntimeException", "Error"],
-            "correctAnswer": "Checked"
-          },
-          {
-            "questionId": "EXC_D2",
-            "question": "Which of the following is the purpose of a custom exception?",
-            "options": ["To provide a more specific exception", "To handle runtime exceptions", "To make a method fail", "To create new types of errors"],
-            "correctAnswer": "To provide a more specific exception"
-          },
-          {
-            "questionId": "EXC_D3",
-            "question": "What happens if an exception is thrown inside a catch block?",
-            "options": ["The exception is propagated further", "The program stops", "The exception is ignored", "The code after the catch block is executed"],
-            "correctAnswer": "The exception is propagated further"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "OOP",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "OOP_F1",
-            "question": "Quale parola chiave viene utilizzata per creare una classe in Java?",
-            "options": ["class", "Class", "new", "object"],
-            "correctAnswer": "class"
-          },
-          {
-            "questionId": "OOP_F2",
-            "question": "Quale concetto dell'OOP permette di creare più oggetti dallo stesso modello?",
-            "options": ["Ereditarietà", "Polimorfismo", "Incapsulamento", "Istanziazione"],
-            "correctAnswer": "Istanziazione"
-          },
-          {
-            "questionId": "OOP_F3",
-            "question": "Come si chiama il metodo speciale usato per inizializzare un oggetto in Java?",
-            "options": ["setter", "getter", "costruttore", "inizializzatore"],
-            "correctAnswer": "costruttore"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "OOP_M1",
-            "question": "Quale modificatore di accesso rende un attributo accessibile solo all'interno della classe?",
-            "options": ["public", "protected", "private", "default"],
-            "correctAnswer": "private"
-          },
-          {
-            "questionId": "OOP_M2",
-            "question": "Quale concetto dell'OOP consente a una classe di derivare le proprietà di un'altra classe?",
-            "options": ["Polimorfismo", "Ereditarietà", "Incapsulamento", "Overloading"],
-            "correctAnswer": "Ereditarietà"
-          },
-          {
-            "questionId": "OOP_M3",
-            "question": "Come si chiama il processo di nascondere i dettagli interni di un oggetto e permettere l'accesso solo attraverso metodi pubblici?",
-            "options": ["Ereditarietà", "Polimorfismo", "Incapsulamento", "Astrazione"],
-            "correctAnswer": "Incapsulamento"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "OOP_D1",
-            "question": "Quale delle seguenti affermazioni sul polimorfismo è corretta?",
-            "options": ["Permette a metodi con lo stesso nome di comportarsi in modo diverso in classi diverse", "Impone che i metodi abbiano lo stesso comportamento in tutte le classi", "Permette di creare oggetti con lo stesso tipo", "Non è supportato in Java"],
-            "correctAnswer": "Permette a metodi con lo stesso nome di comportarsi in modo diverso in classi diverse"
-          },
-          {
-            "questionId": "OOP_D2",
-            "question": "Cosa significa il termine 'overriding' in Java?",
-            "options": ["Creare una nuova classe che estende un'altra", "Rimuovere un metodo da una classe", "Modificare un metodo già definito nella classe padre", "Aggiungere un nuovo metodo in una classe figlia"],
-            "correctAnswer": "Modificare un metodo già definito nella classe padre"
-          },
-          {
-            "questionId": "OOP_D3",
-            "question": "Che cosa restituisce un metodo che non ha una dichiarazione di tipo di ritorno in Java?",
-            "options": ["NullPointerException", "Errore di compilazione", "Null", "Void"],
-            "correctAnswer": "Void"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "GUI",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "GUI_F1",
-            "question": "Which class is used to create a simple window in JavaFX?",
-            "options": ["Frame", "Stage", "Window", "Panel"],
-            "correctAnswer": "Stage"
-          },
-          {
-            "questionId": "GUI_F2",
-            "question": "How do you add a button to a JavaFX window?",
-            "options": ["stage.setButton()", "scene.add(button)", "button.setScene()", "button.setStage(stage)"],
-            "correctAnswer": "scene.add(button)"
-          },
-          {
-            "questionId": "GUI_F3",
-            "question": "Which JavaFX container is used to arrange elements in a grid layout?",
-            "options": ["VBox", "HBox", "GridPane", "FlowPane"],
-            "correctAnswer": "GridPane"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "GUI_M1",
-            "question": "Which method is used to set the title of a JavaFX stage?",
-            "options": ["stage.setTitle()", "stage.setText()", "stage.setTitleText()", "stage.setLabel()"],
-            "correctAnswer": "stage.setTitle()"
-          },
-          {
-            "questionId": "GUI_M2",
-            "question": "How do you handle a button click event in JavaFX?",
-            "options": ["button.setOnAction(event -> { ... })", "button.setOnClick(event -> { ... })", "button.addEvent(event -> { ... })", "button.addListener(event -> { ... })"],
-            "correctAnswer": "button.setOnAction(event -> { ... })"
-          },
-          {
-            "questionId": "GUI_M3",
-            "question": "What is the function of the 'VBox' layout in JavaFX?",
-            "options": ["Arranges elements horizontally", "Arranges elements vertically", "Displays elements in a table format", "Displays elements in a scrollable list"],
-            "correctAnswer": "Arranges elements vertically"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "GUI_D1",
-            "question": "Which JavaFX component is used to display images?",
-            "options": ["ImageView", "Label", "Canvas", "TextField"],
-            "correctAnswer": "ImageView"
-          },
-          {
-            "questionId": "GUI_D2",
-            "question": "How can you create a custom layout in JavaFX?",
-            "options": ["By using the Region class", "By creating a new Scene class", "By extending Pane and overriding the layout method", "By using the GridPane layout manager"],
-            "correctAnswer": "By extending Pane and overriding the layout method"
-          },
-          {
-            "questionId": "GUI_D3",
-            "question": "What is the purpose of the 'Application.launch()' method in a JavaFX program?",
-            "options": ["It starts the JavaFX application and opens the main window", "It compiles the JavaFX program", "It defines the entry point for a JavaFX program", "It runs the event loop"],
-            "correctAnswer": "It starts the JavaFX application and opens the main window"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "Inheritance",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "INH_F1",
-            "question": "What is inheritance in Java?",
-            "options": ["A mechanism to allow classes to share data", "A way to define new classes based on existing ones", "A method to duplicate objects", "A process to create abstract classes"],
-            "correctAnswer": "A way to define new classes based on existing ones"
-          },
-          {
-            "questionId": "INH_F2",
-            "question": "Which keyword is used to inherit a class in Java?",
-            "options": ["implements", "extends", "inherits", "super"],
-            "correctAnswer": "extends"
-          },
-          {
-            "questionId": "INH_F3",
-            "question": "Which of the following allows a class to inherit from another class in Java?",
-            "options": ["Only classes can inherit other classes", "Methods can inherit other methods", "A class can inherit another class using the 'extends' keyword", "Methods can be inherited from interfaces"],
-            "correctAnswer": "A class can inherit another class using the 'extends' keyword"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "INH_M1",
-            "question": "What is the purpose of the 'super' keyword in inheritance?",
-            "options": ["To access methods from the parent class", "To access static variables", "To define a parent class", "To create a new class instance"],
-            "correctAnswer": "To access methods from the parent class"
-          },
-          {
-            "questionId": "INH_M2",
-            "question": "What will happen if a subclass doesn't implement a method declared in the parent class?",
-            "options": ["The code won't compile", "It will be inherited from the parent class", "It will lead to a runtime error", "It will automatically create a new method"],
-            "correctAnswer": "The code won't compile"
-          },
-          {
-            "questionId": "INH_M3",
-            "question": "Which of the following statements about method overriding in inheritance is true?",
-            "options": ["The method in the subclass must have the same signature as in the parent class", "Overriding methods must have a different name", "Overriding is only possible for private methods", "Overridden methods can have different return types"],
-            "correctAnswer": "The method in the subclass must have the same signature as in the parent class"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "INH_D1",
-            "question": "Can a class inherit from multiple classes in Java?",
-            "options": ["Yes, using the 'extends' keyword multiple times", "No, Java doesn't support multiple inheritance", "Yes, but only if the classes implement interfaces", "Yes, using 'super' keyword"],
-            "correctAnswer": "No, Java doesn't support multiple inheritance"
-          },
-          {
-            "questionId": "INH_D2",
-            "question": "What happens when a subclass has a constructor and the parent class doesn't have a no-argument constructor?",
-            "options": ["The subclass can still call the parent class constructor", "The subclass will automatically generate a no-argument constructor", "The subclass cannot be instantiated", "The program will throw a compilation error"],
-            "correctAnswer": "The subclass cannot be instantiated"
-          },
-          {
-            "questionId": "INH_D3",
-            "question": "What is method hiding in Java inheritance?",
-            "options": ["When a subclass method overrides a parent class method", "When a method in a subclass has the same name as a method in the parent class but with a different signature", "When a method is defined in both parent and child class but doesn't interact", "When a parent class method is hidden from the subclass"],
-            "correctAnswer": "When a method in a subclass has the same name as a method in the parent class but with a different signature"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "Recursion",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "REC_F1",
-            "question": "What is recursion in programming?",
-            "options": ["Calling a method from another method", "A method calling itself", "A method that handles loops", "A method with infinite loops"],
-            "correctAnswer": "A method calling itself"
-          },
-          {
-            "questionId": "REC_F2",
-            "question": "Which of the following is a key condition for recursion to work correctly?",
-            "options": ["Infinite loops", "Base case", "Multiple method calls", "Global variables"],
-            "correctAnswer": "Base case"
-          },
-          {
-            "questionId": "REC_F3",
-            "question": "What happens if a recursive method does not have a base case?",
-            "options": ["The method will execute only once", "The program will run forever", "The method will throw an exception", "The program will terminate"],
-            "correctAnswer": "The program will run forever"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "REC_M1",
-            "question": "How do you prevent a recursive function from running indefinitely?",
-            "options": ["By using the return keyword", "By defining a proper base case", "By using iteration", "By defining a termination condition in the loop"],
-            "correctAnswer": "By defining a proper base case"
-          },
-          {
-            "questionId": "REC_M2",
-            "question": "Which of the following methods uses recursion?",
-            "options": ["Finding the factorial of a number", "Converting a number to a string", "Searching in an array", "Summing an array"],
-            "correctAnswer": "Finding the factorial of a number"
-          },
-          {
-            "questionId": "REC_M3",
-            "question": "What is the output of the following recursive function call?\n\npublic static int factorial(int n) {\n    if (n == 0) return 1;\n    return n * factorial(n - 1);\n}\n\nfactorial(5);",
-            "options": ["5", "15", "120", "25"],
-            "correctAnswer": "120"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "REC_D1",
-            "question": "What is the space complexity of a recursive function with no additional data structures?",
-            "options": ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
-            "correctAnswer": "O(n)"
-          },
-          {
-            "questionId": "REC_D2",
-            "question": "Which technique can be used to optimize recursive functions to avoid excessive memory usage?",
-            "options": ["Memoization", "Iterative loops", "Tail recursion", "Refactoring"],
-            "correctAnswer": "Tail recursion"
-          },
-          {
-            "questionId": "REC_D3",
-            "question": "What will happen if the base case in a recursive function is defined incorrectly?",
-            "options": ["The recursion will not stop, leading to a stack overflow", "The function will terminate correctly", "The program will throw a compile-time error", "The function will return a null value"],
-            "correctAnswer": "The recursion will not stop, leading to a stack overflow"
-          }
-        ]
-      }
-    },
-    {
-      "macroTopic": "Polymorphism",
-      "levels": {
-        "facile": [
-          {
-            "questionId": "POL_F1",
-            "question": "Quale dei seguenti concetti è associato al polimorfismo in Java?",
-            "options": ["Metodi con lo stesso nome ma comportamenti diversi", "Metodi con lo stesso comportamento in classi diverse", "Creazione di oggetti con lo stesso tipo", "None of the above"],
-            "correctAnswer": "Metodi con lo stesso nome ma comportamenti diversi"
-          }
-        ],
-        "medio": [
-          {
-            "questionId": "POL_M1",
-            "question": "Come si definisce il polimorfismo in Java?",
-            "options": ["Come la capacità di un oggetto di prendere molte forme", "Come la capacità di una classe di estendersi", "Come la capacità di un oggetto di eseguire più metodi", "None of the above"],
-            "correctAnswer": "Come la capacità di un oggetto di prendere molte forme"
-          }
-        ],
-        "difficile": [
-          {
-            "questionId": "POL_D1",
-            "question": "In che modo il polimorfismo aiuta nella progettazione dei sistemi?",
-            "options": ["Rende il codice più rigido", "Permette di definire una struttura fissa", "Favorisce la generalizzazione e riutilizzo del codice", "Aumenta la complessità del codice"],
-            "correctAnswer": "Favorisce la generalizzazione e riutilizzo del codice"
-          }
-        ]
-      }
+  "exercises" : [ {
+    "macroTopic" : "Basics",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "Basics",
+        "level" : "facile",
+        "questionId" : "BAS_F1",
+        "question" : "Da quale indice parte un array in Java?",
+        "options" : [ "0", "1", "-1", "Dipende dalla JVM" ],
+        "correctAnswer" : "0"
+      }, {
+        "macroTopic" : "Basics",
+        "level" : "facile",
+        "questionId" : "BAS_F2",
+        "question" : "Quale parola chiave si usa per dichiarare una costante in Java?",
+        "options" : [ "constant", "final", "var", "static" ],
+        "correctAnswer" : "final"
+      }, {
+        "macroTopic" : "Basics",
+        "level" : "facile",
+        "questionId" : "BAS_F3",
+        "question" : "Quale tipo di dato viene usato per un singolo carattere in Java?",
+        "options" : [ "char", "string", "Character", "byte" ],
+        "correctAnswer" : "char"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "Basics",
+        "level" : "medio",
+        "questionId" : "BAS_M1",
+        "question" : "Cosa fa il compilatore Java?",
+        "options" : [ "Interpreta il codice sorgente", "Compila il codice in bytecode", "Esegue direttamente il codice", "Converte Java in Assembly" ],
+        "correctAnswer" : "Compila il codice in bytecode"
+      }, {
+        "macroTopic" : "Basics",
+        "level" : "medio",
+        "questionId" : "BAS_M2",
+        "question" : "Cosa significa 'JVM'?",
+        "options" : [ "Java Variable Machine", "Java Virtual Machine", "Java Versatile Memory", "Java Verified Module" ],
+        "correctAnswer" : "Java Virtual Machine"
+      }, {
+        "macroTopic" : "Basics",
+        "level" : "medio",
+        "questionId" : "BAS_M3",
+        "question" : "Qual è il risultato di 10 / 3 in Java se entrambi sono interi?",
+        "options" : [ "3.33", "3", "4", "Errore" ],
+        "correctAnswer" : "3"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "Basics",
+        "level" : "difficile",
+        "questionId" : "BAS_D1",
+        "question" : "Quale di questi modificatori di accesso permette la visibilità solo all'interno dello stesso package?",
+        "options" : [ "private", "protected", "public", "(default)" ],
+        "correctAnswer" : "(default)"
+      }, {
+        "macroTopic" : "Basics",
+        "level" : "difficile",
+        "questionId" : "BAS_D2",
+        "question" : "Cosa succede se il metodo main() di una classe non è dichiarato static?",
+        "options" : [ "Compila ma non si esegue", "Errore di compilazione", "Viene eseguito normalmente", "Si esegue ma senza output" ],
+        "correctAnswer" : "Errore di compilazione"
+      }, {
+        "macroTopic" : "Basics",
+        "level" : "difficile",
+        "questionId" : "BAS_D3",
+        "question" : "Quale eccezione viene sollevata se si tenta di accedere a un indice inesistente di un array?",
+        "options" : [ "NullPointerException", "ArrayIndexOutOfBoundsException", "IndexException", "OutOfMemoryError" ],
+        "correctAnswer" : "ArrayIndexOutOfBoundsException"
+      } ]
     }
-  ]
+  }, {
+    "macroTopic" : "Loops and Iterations",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "facile",
+        "questionId" : "LOOP_F1",
+        "question" : "Come si scrive un ciclo for in Java?",
+        "options" : [ "for(int i=0; i<10; i++)", "for(i=0; i<10; i++)", "for(int i=0; i<=10; i++)", "while(i<10)" ],
+        "correctAnswer" : "for(int i=0; i<10; i++)"
+      }, {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "facile",
+        "questionId" : "LOOP_F2",
+        "question" : "Quale di queste è una condizione di uscita di un ciclo while?",
+        "options" : [ "i==10", "i<10", "i>10", "Tutti i precedenti" ],
+        "correctAnswer" : "i==10"
+      }, {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "facile",
+        "questionId" : "LOOP_F3",
+        "question" : "Quale tipo di ciclo in Java si ripete un numero di volte determinato?",
+        "options" : [ "for", "while", "do-while", "Tutti i precedenti" ],
+        "correctAnswer" : "for"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "medio",
+        "questionId" : "LOOP_M1",
+        "question" : "Quale sarà il risultato di questo ciclo for? 'for(int i=1; i<=5; i++) System.out.println(i);'",
+        "options" : [ "1 2 3 4 5", "0 1 2 3 4", "1 2 3 4", "5 4 3 2 1" ],
+        "correctAnswer" : "1 2 3 4 5"
+      }, {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "medio",
+        "questionId" : "LOOP_M2",
+        "question" : "Che tipo di ciclo dovresti usare se non conosci a priori il numero di iterazioni?",
+        "options" : [ "for", "while", "do-while", "None of the above" ],
+        "correctAnswer" : "while"
+      }, {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "medio",
+        "questionId" : "LOOP_M3",
+        "question" : "Cosa farà il seguente codice? 'int i=0; while(i<3) { System.out.println(i); i++; }'",
+        "options" : [ "Stampa 0, 1, 2", "Stampa 1, 2, 3", "Stampa 1", "Errore" ],
+        "correctAnswer" : "Stampa 0, 1, 2"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "difficile",
+        "questionId" : "LOOP_D1",
+        "question" : "Qual è la differenza principale tra il ciclo for e il ciclo while in Java?",
+        "options" : [ "Nessuna differenza", "Il ciclo for è usato solo per contare", "Il ciclo while ha una condizione di terminazione prima dell'esecuzione", "Il ciclo for ha una condizione di terminazione prima dell'esecuzione" ],
+        "correctAnswer" : "Il ciclo while ha una condizione di terminazione prima dell'esecuzione"
+      }, {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "difficile",
+        "questionId" : "LOOP_D2",
+        "question" : "Quale sarà il risultato del seguente ciclo: 'for(int i=0; i<5; i++) { if(i%2==0) continue; System.out.println(i); }'",
+        "options" : [ "1 3", "0 2 4", "1 2 3 4", "1 2 3 4 5" ],
+        "correctAnswer" : "1 3"
+      }, {
+        "macroTopic" : "Loops and Iterations",
+        "level" : "difficile",
+        "questionId" : "LOOP_D3",
+        "question" : "Come può essere interrotto un ciclo in Java prima del termine naturale?",
+        "options" : [ "break", "exit", "return", "stop" ],
+        "correctAnswer" : "break"
+      } ]
+    }
+  }, {
+    "macroTopic" : "DataStructures",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "DataStructures",
+        "level" : "facile",
+        "questionId" : "DS_F1",
+        "question" : "What is an array in Java?",
+        "options" : [ "A collection of elements of different types", "A collection of elements of the same type", "A type of list", "A method to store data" ],
+        "correctAnswer" : "A collection of elements of the same type"
+      }, {
+        "macroTopic" : "DataStructures",
+        "level" : "facile",
+        "questionId" : "DS_F2",
+        "question" : "How do you declare an array in Java?",
+        "options" : [ "int[] arr;", "int arr[];", "Both of the above", "int array[];" ],
+        "correctAnswer" : "Both of the above"
+      }, {
+        "macroTopic" : "DataStructures",
+        "level" : "facile",
+        "questionId" : "DS_F3",
+        "question" : "Which of the following is an ordered collection in Java?",
+        "options" : [ "ArrayList", "HashMap", "HashSet", "TreeSet" ],
+        "correctAnswer" : "ArrayList"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "DataStructures",
+        "level" : "medio",
+        "questionId" : "DS_M1",
+        "question" : "What is the time complexity of accessing an element in an array by index?",
+        "options" : [ "O(1)", "O(n)", "O(log n)", "O(n^2)" ],
+        "correctAnswer" : "O(1)"
+      }, {
+        "macroTopic" : "DataStructures",
+        "level" : "medio",
+        "questionId" : "DS_M2",
+        "question" : "Which data structure would you use to store key-value pairs in Java?",
+        "options" : [ "Array", "LinkedList", "HashMap", "Stack" ],
+        "correctAnswer" : "HashMap"
+      }, {
+        "macroTopic" : "DataStructures",
+        "level" : "medio",
+        "questionId" : "DS_M3",
+        "question" : "Which of the following is a correct statement about an ArrayList in Java?",
+        "options" : [ "It can hold elements of different types", "It automatically resizes when it exceeds its capacity", "It is slower than arrays", "It doesn't allow null values" ],
+        "correctAnswer" : "It automatically resizes when it exceeds its capacity"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "DataStructures",
+        "level" : "difficile",
+        "questionId" : "DS_D1",
+        "question" : "What is the time complexity of searching for an element in a HashMap?",
+        "options" : [ "O(1)", "O(n)", "O(log n)", "O(n^2)" ],
+        "correctAnswer" : "O(1)"
+      }, {
+        "macroTopic" : "DataStructures",
+        "level" : "difficile",
+        "questionId" : "DS_D2",
+        "question" : "Which of the following is true about a LinkedList?",
+        "options" : [ "It allows fast random access", "It is implemented as an array", "It uses pointers to link elements", "It can store only one type of object" ],
+        "correctAnswer" : "It uses pointers to link elements"
+      }, {
+        "macroTopic" : "DataStructures",
+        "level" : "difficile",
+        "questionId" : "DS_D3",
+        "question" : "Which of the following collections guarantees the order of insertion?",
+        "options" : [ "HashSet", "LinkedHashSet", "TreeSet", "HashMap" ],
+        "correctAnswer" : "LinkedHashSet"
+      } ]
+    }
+  }, {
+    "macroTopic" : "Debugging",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "Debugging",
+        "level" : "facile",
+        "questionId" : "DEBUG_F1",
+        "question" : "What is the cause of this error? 'int[] arr = new int[5]; arr[5] = 10;'",
+        "options" : [ "ArrayIndexOutOfBoundsException", "NullPointerException", "SyntaxError", "TypeMismatchException" ],
+        "correctAnswer" : "ArrayIndexOutOfBoundsException"
+      }, {
+        "macroTopic" : "Debugging",
+        "level" : "facile",
+        "questionId" : "DEBUG_F2",
+        "question" : "What is the result of the following code: 'System.out.println(10/0);'",
+        "options" : [ "Infinity", "ArithmeticException", "NaN", "0" ],
+        "correctAnswer" : "ArithmeticException"
+      }, {
+        "macroTopic" : "Debugging",
+        "level" : "facile",
+        "questionId" : "DEBUG_F3",
+        "question" : "What would happen if we tried to call a method on a null object?",
+        "options" : [ "NullPointerException", "No output", "Method call is ignored", "Program exits" ],
+        "correctAnswer" : "NullPointerException"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "Debugging",
+        "level" : "medio",
+        "questionId" : "DEBUG_M1",
+        "question" : "How would you fix this error? 'String s = null; s.length();'",
+        "options" : [ "Check if s is null before calling length()", "Assign an empty string to s", "Use the toUpperCase() method", "Change the type of s to StringBuilder" ],
+        "correctAnswer" : "Check if s is null before calling length()"
+      }, {
+        "macroTopic" : "Debugging",
+        "level" : "medio",
+        "questionId" : "DEBUG_M2",
+        "question" : "What does the following code throw? 'int[] arr = null; arr[0] = 1;'",
+        "options" : [ "NullPointerException", "ArrayIndexOutOfBoundsException", "RuntimeException", "ClassCastException" ],
+        "correctAnswer" : "NullPointerException"
+      }, {
+        "macroTopic" : "Debugging",
+        "level" : "medio",
+        "questionId" : "DEBUG_M3",
+        "question" : "What is the result of the code 'int x = 10; if(x > 5) { System.out.println(\"True\"); } else { System.out.println(\"False\"); }'",
+        "options" : [ "True", "False", "Error", "Nothing is printed" ],
+        "correctAnswer" : "True"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "Debugging",
+        "level" : "difficile",
+        "questionId" : "DEBUG_D1",
+        "question" : "What is the error in the following code? 'public class Test { public static void main(String[] args) { System.out.println(10/0); } }'",
+        "options" : [ "ArithmeticException", "NullPointerException", "ClassNotFoundException", "IOException" ],
+        "correctAnswer" : "ArithmeticException"
+      }, {
+        "macroTopic" : "Debugging",
+        "level" : "difficile",
+        "questionId" : "DEBUG_D2",
+        "question" : "What does the following code throw? 'int[] arr = new int[5]; arr[10] = 1;'",
+        "options" : [ "ArrayIndexOutOfBoundsException", "IndexOutOfBoundsException", "NullPointerException", "OutOfMemoryError" ],
+        "correctAnswer" : "ArrayIndexOutOfBoundsException"
+      }, {
+        "macroTopic" : "Debugging",
+        "level" : "difficile",
+        "questionId" : "DEBUG_D3",
+        "question" : "Which error would be thrown by the code? 'String str = \"Hello\"; int length = str[0];'",
+        "options" : [ "TypeMismatchException", "NullPointerException", "ArrayIndexOutOfBoundsException", "StringIndexOutOfBoundsException" ],
+        "correctAnswer" : "TypeMismatchException"
+      } ]
+    }
+  }, {
+    "macroTopic" : "Exceptions",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "Exceptions",
+        "level" : "facile",
+        "questionId" : "EXC_F1",
+        "question" : "What is the purpose of the 'try-catch' block?",
+        "options" : [ "To handle exceptions", "To create exceptions", "To create a loop", "To terminate a program" ],
+        "correctAnswer" : "To handle exceptions"
+      }, {
+        "macroTopic" : "Exceptions",
+        "level" : "facile",
+        "questionId" : "EXC_F2",
+        "question" : "Which of the following is the superclass of all exceptions?",
+        "options" : [ "Error", "Throwable", "Exception", "RuntimeException" ],
+        "correctAnswer" : "Throwable"
+      }, {
+        "macroTopic" : "Exceptions",
+        "level" : "facile",
+        "questionId" : "EXC_F3",
+        "question" : "What happens when an exception is not caught?",
+        "options" : [ "The program stops execution", "The exception is ignored", "The program continues normally", "The exception is automatically fixed" ],
+        "correctAnswer" : "The program stops execution"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "Exceptions",
+        "level" : "medio",
+        "questionId" : "EXC_M1",
+        "question" : "What will happen if we throw a checked exception without declaring it in the method signature?",
+        "options" : [ "Compiling error", "Runtime exception", "The exception is caught automatically", "No effect" ],
+        "correctAnswer" : "Compiling error"
+      }, {
+        "macroTopic" : "Exceptions",
+        "level" : "medio",
+        "questionId" : "EXC_M2",
+        "question" : "Which exception is thrown when a method is invoked on a null object?",
+        "options" : [ "NullPointerException", "ArrayIndexOutOfBoundsException", "ClassCastException", "ArithmeticException" ],
+        "correctAnswer" : "NullPointerException"
+      }, {
+        "macroTopic" : "Exceptions",
+        "level" : "medio",
+        "questionId" : "EXC_M3",
+        "question" : "Which block is used to define a cleanup section in a try-catch statement?",
+        "options" : [ "finally", "cleanup", "finally block", "catch block" ],
+        "correctAnswer" : "finally"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "Exceptions",
+        "level" : "difficile",
+        "questionId" : "EXC_D1",
+        "question" : "Which type of exception is 'FileNotFoundException'?",
+        "options" : [ "Checked", "Unchecked", "RuntimeException", "Error" ],
+        "correctAnswer" : "Checked"
+      }, {
+        "macroTopic" : "Exceptions",
+        "level" : "difficile",
+        "questionId" : "EXC_D2",
+        "question" : "Which of the following is the purpose of a custom exception?",
+        "options" : [ "To provide a more specific exception", "To handle runtime exceptions", "To make a method fail", "To create new types of errors" ],
+        "correctAnswer" : "To provide a more specific exception"
+      }, {
+        "macroTopic" : "Exceptions",
+        "level" : "difficile",
+        "questionId" : "EXC_D3",
+        "question" : "What happens if an exception is thrown inside a catch block?",
+        "options" : [ "The exception is propagated further", "The program stops", "The exception is ignored", "The code after the catch block is executed" ],
+        "correctAnswer" : "The exception is propagated further"
+      } ]
+    }
+  }, {
+    "macroTopic" : "OOP",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "OOP",
+        "level" : "facile",
+        "questionId" : "OOP_F1",
+        "question" : "Quale parola chiave viene utilizzata per creare una classe in Java?",
+        "options" : [ "class", "Class", "new", "object" ],
+        "correctAnswer" : "class"
+      }, {
+        "macroTopic" : "OOP",
+        "level" : "facile",
+        "questionId" : "OOP_F2",
+        "question" : "Quale concetto dell'OOP permette di creare più oggetti dallo stesso modello?",
+        "options" : [ "Ereditarietà", "Polimorfismo", "Incapsulamento", "Istanziazione" ],
+        "correctAnswer" : "Istanziazione"
+      }, {
+        "macroTopic" : "OOP",
+        "level" : "facile",
+        "questionId" : "OOP_F3",
+        "question" : "Come si chiama il metodo speciale usato per inizializzare un oggetto in Java?",
+        "options" : [ "setter", "getter", "costruttore", "inizializzatore" ],
+        "correctAnswer" : "costruttore"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "OOP",
+        "level" : "medio",
+        "questionId" : "OOP_M1",
+        "question" : "Quale modificatore di accesso rende un attributo accessibile solo all'interno della classe?",
+        "options" : [ "public", "protected", "private", "default" ],
+        "correctAnswer" : "private"
+      }, {
+        "macroTopic" : "OOP",
+        "level" : "medio",
+        "questionId" : "OOP_M2",
+        "question" : "Quale concetto dell'OOP consente a una classe di derivare le proprietà di un'altra classe?",
+        "options" : [ "Polimorfismo", "Ereditarietà", "Incapsulamento", "Overloading" ],
+        "correctAnswer" : "Ereditarietà"
+      }, {
+        "macroTopic" : "OOP",
+        "level" : "medio",
+        "questionId" : "OOP_M3",
+        "question" : "Come si chiama il processo di nascondere i dettagli interni di un oggetto e permettere l'accesso solo attraverso metodi pubblici?",
+        "options" : [ "Ereditarietà", "Polimorfismo", "Incapsulamento", "Astrazione" ],
+        "correctAnswer" : "Incapsulamento"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "OOP",
+        "level" : "difficile",
+        "questionId" : "OOP_D1",
+        "question" : "Quale delle seguenti affermazioni sul polimorfismo è corretta?",
+        "options" : [ "Permette a metodi con lo stesso nome di comportarsi in modo diverso in classi diverse", "Impone che i metodi abbiano lo stesso comportamento in tutte le classi", "Permette di creare oggetti con lo stesso tipo", "Non è supportato in Java" ],
+        "correctAnswer" : "Permette a metodi con lo stesso nome di comportarsi in modo diverso in classi diverse"
+      }, {
+        "macroTopic" : "OOP",
+        "level" : "difficile",
+        "questionId" : "OOP_D2",
+        "question" : "Cosa significa il termine 'overriding' in Java?",
+        "options" : [ "Creare una nuova classe che estende un'altra", "Rimuovere un metodo da una classe", "Modificare un metodo già definito nella classe padre", "Aggiungere un nuovo metodo in una classe figlia" ],
+        "correctAnswer" : "Modificare un metodo già definito nella classe padre"
+      }, {
+        "macroTopic" : "OOP",
+        "level" : "difficile",
+        "questionId" : "OOP_D3",
+        "question" : "Che cosa restituisce un metodo che non ha una dichiarazione di tipo di ritorno in Java?",
+        "options" : [ "NullPointerException", "Errore di compilazione", "Null", "Void" ],
+        "correctAnswer" : "Void"
+      } ]
+    }
+  }, {
+    "macroTopic" : "GUI",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "GUI",
+        "level" : "facile",
+        "questionId" : "GUI_F1",
+        "question" : "Which class is used to create a simple window in JavaFX?",
+        "options" : [ "Frame", "Stage", "Window", "Panel" ],
+        "correctAnswer" : "Stage"
+      }, {
+        "macroTopic" : "GUI",
+        "level" : "facile",
+        "questionId" : "GUI_F2",
+        "question" : "How do you add a button to a JavaFX window?",
+        "options" : [ "stage.setButton()", "scene.add(button)", "button.setScene()", "button.setStage(stage)" ],
+        "correctAnswer" : "scene.add(button)"
+      }, {
+        "macroTopic" : "GUI",
+        "level" : "facile",
+        "questionId" : "GUI_F3",
+        "question" : "Which JavaFX container is used to arrange elements in a grid layout?",
+        "options" : [ "VBox", "HBox", "GridPane", "FlowPane" ],
+        "correctAnswer" : "GridPane"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "GUI",
+        "level" : "medio",
+        "questionId" : "GUI_M1",
+        "question" : "Which method is used to set the title of a JavaFX stage?",
+        "options" : [ "stage.setTitle()", "stage.setText()", "stage.setTitleText()", "stage.setLabel()" ],
+        "correctAnswer" : "stage.setTitle()"
+      }, {
+        "macroTopic" : "GUI",
+        "level" : "medio",
+        "questionId" : "GUI_M2",
+        "question" : "How do you handle a button click event in JavaFX?",
+        "options" : [ "button.setOnAction(event -> { ... })", "button.setOnClick(event -> { ... })", "button.addEvent(event -> { ... })", "button.addListener(event -> { ... })" ],
+        "correctAnswer" : "button.setOnAction(event -> { ... })"
+      }, {
+        "macroTopic" : "GUI",
+        "level" : "medio",
+        "questionId" : "GUI_M3",
+        "question" : "What is the function of the 'VBox' layout in JavaFX?",
+        "options" : [ "Arranges elements horizontally", "Arranges elements vertically", "Displays elements in a table format", "Displays elements in a scrollable list" ],
+        "correctAnswer" : "Arranges elements vertically"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "GUI",
+        "level" : "difficile",
+        "questionId" : "GUI_D1",
+        "question" : "Which JavaFX component is used to display images?",
+        "options" : [ "ImageView", "Label", "Canvas", "TextField" ],
+        "correctAnswer" : "ImageView"
+      }, {
+        "macroTopic" : "GUI",
+        "level" : "difficile",
+        "questionId" : "GUI_D2",
+        "question" : "How can you create a custom layout in JavaFX?",
+        "options" : [ "By using the Region class", "By creating a new Scene class", "By extending Pane and overriding the layout method", "By using the GridPane layout manager" ],
+        "correctAnswer" : "By extending Pane and overriding the layout method"
+      }, {
+        "macroTopic" : "GUI",
+        "level" : "difficile",
+        "questionId" : "GUI_D3",
+        "question" : "What is the purpose of the 'Application.launch()' method in a JavaFX program?",
+        "options" : [ "It starts the JavaFX application and opens the main window", "It compiles the JavaFX program", "It defines the entry point for a JavaFX program", "It runs the event loop" ],
+        "correctAnswer" : "It starts the JavaFX application and opens the main window"
+      } ]
+    }
+  }, {
+    "macroTopic" : "Inheritance",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "Inheritance",
+        "level" : "facile",
+        "questionId" : "INH_F1",
+        "question" : "What is inheritance in Java?",
+        "options" : [ "A mechanism to allow classes to share data", "A way to define new classes based on existing ones", "A method to duplicate objects", "A process to create abstract classes" ],
+        "correctAnswer" : "A way to define new classes based on existing ones"
+      }, {
+        "macroTopic" : "Inheritance",
+        "level" : "facile",
+        "questionId" : "INH_F2",
+        "question" : "Which keyword is used to inherit a class in Java?",
+        "options" : [ "implements", "extends", "inherits", "super" ],
+        "correctAnswer" : "extends"
+      }, {
+        "macroTopic" : "Inheritance",
+        "level" : "facile",
+        "questionId" : "INH_F3",
+        "question" : "Which of the following allows a class to inherit from another class in Java?",
+        "options" : [ "Only classes can inherit other classes", "Methods can inherit other methods", "A class can inherit another class using the 'extends' keyword", "Methods can be inherited from interfaces" ],
+        "correctAnswer" : "A class can inherit another class using the 'extends' keyword"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "Inheritance",
+        "level" : "medio",
+        "questionId" : "INH_M1",
+        "question" : "What is the purpose of the 'super' keyword in inheritance?",
+        "options" : [ "To access methods from the parent class", "To access static variables", "To define a parent class", "To create a new class instance" ],
+        "correctAnswer" : "To access methods from the parent class"
+      }, {
+        "macroTopic" : "Inheritance",
+        "level" : "medio",
+        "questionId" : "INH_M2",
+        "question" : "What will happen if a subclass doesn't implement a method declared in the parent class?",
+        "options" : [ "The code won't compile", "It will be inherited from the parent class", "It will lead to a runtime error", "It will automatically create a new method" ],
+        "correctAnswer" : "The code won't compile"
+      }, {
+        "macroTopic" : "Inheritance",
+        "level" : "medio",
+        "questionId" : "INH_M3",
+        "question" : "Which of the following statements about method overriding in inheritance is true?",
+        "options" : [ "The method in the subclass must have the same signature as in the parent class", "Overriding methods must have a different name", "Overriding is only possible for private methods", "Overridden methods can have different return types" ],
+        "correctAnswer" : "The method in the subclass must have the same signature as in the parent class"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "Inheritance",
+        "level" : "difficile",
+        "questionId" : "INH_D1",
+        "question" : "Can a class inherit from multiple classes in Java?",
+        "options" : [ "Yes, using the 'extends' keyword multiple times", "No, Java doesn't support multiple inheritance", "Yes, but only if the classes implement interfaces", "Yes, using 'super' keyword" ],
+        "correctAnswer" : "No, Java doesn't support multiple inheritance"
+      }, {
+        "macroTopic" : "Inheritance",
+        "level" : "difficile",
+        "questionId" : "INH_D2",
+        "question" : "What happens when a subclass has a constructor and the parent class doesn't have a no-argument constructor?",
+        "options" : [ "The subclass can still call the parent class constructor", "The subclass will automatically generate a no-argument constructor", "The subclass cannot be instantiated", "The program will throw a compilation error" ],
+        "correctAnswer" : "The subclass cannot be instantiated"
+      }, {
+        "macroTopic" : "Inheritance",
+        "level" : "difficile",
+        "questionId" : "INH_D3",
+        "question" : "What is method hiding in Java inheritance?",
+        "options" : [ "When a subclass method overrides a parent class method", "When a method in a subclass has the same name as a method in the parent class but with a different signature", "When a method is defined in both parent and child class but doesn't interact", "When a parent class method is hidden from the subclass" ],
+        "correctAnswer" : "When a method in a subclass has the same name as a method in the parent class but with a different signature"
+      } ]
+    }
+  }, {
+    "macroTopic" : "Recursion",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "Recursion",
+        "level" : "facile",
+        "questionId" : "REC_F1",
+        "question" : "What is recursion in programming?",
+        "options" : [ "Calling a method from another method", "A method calling itself", "A method that handles loops", "A method with infinite loops" ],
+        "correctAnswer" : "A method calling itself"
+      }, {
+        "macroTopic" : "Recursion",
+        "level" : "facile",
+        "questionId" : "REC_F2",
+        "question" : "Which of the following is a key condition for recursion to work correctly?",
+        "options" : [ "Infinite loops", "Base case", "Multiple method calls", "Global variables" ],
+        "correctAnswer" : "Base case"
+      }, {
+        "macroTopic" : "Recursion",
+        "level" : "facile",
+        "questionId" : "REC_F3",
+        "question" : "What happens if a recursive method does not have a base case?",
+        "options" : [ "The method will execute only once", "The program will run forever", "The method will throw an exception", "The program will terminate" ],
+        "correctAnswer" : "The program will run forever"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "Recursion",
+        "level" : "medio",
+        "questionId" : "REC_M1",
+        "question" : "How do you prevent a recursive function from running indefinitely?",
+        "options" : [ "By using the return keyword", "By defining a proper base case", "By using iteration", "By defining a termination condition in the loop" ],
+        "correctAnswer" : "By defining a proper base case"
+      }, {
+        "macroTopic" : "Recursion",
+        "level" : "medio",
+        "questionId" : "REC_M2",
+        "question" : "Which of the following methods uses recursion?",
+        "options" : [ "Finding the factorial of a number", "Converting a number to a string", "Searching in an array", "Summing an array" ],
+        "correctAnswer" : "Finding the factorial of a number"
+      }, {
+        "macroTopic" : "Recursion",
+        "level" : "medio",
+        "questionId" : "REC_M3",
+        "question" : "What is the output of the following recursive function call?\n\npublic static int factorial(int n) {\n    if (n == 0) return 1;\n    return n * factorial(n - 1);\n}\n\nfactorial(5);",
+        "options" : [ "5", "15", "120", "25" ],
+        "correctAnswer" : "120"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "Recursion",
+        "level" : "difficile",
+        "questionId" : "REC_D1",
+        "question" : "What is the space complexity of a recursive function with no additional data structures?",
+        "options" : [ "O(1)", "O(n)", "O(log n)", "O(n^2)" ],
+        "correctAnswer" : "O(n)"
+      }, {
+        "macroTopic" : "Recursion",
+        "level" : "difficile",
+        "questionId" : "REC_D2",
+        "question" : "Which technique can be used to optimize recursive functions to avoid excessive memory usage?",
+        "options" : [ "Memoization", "Iterative loops", "Tail recursion", "Refactoring" ],
+        "correctAnswer" : "Tail recursion"
+      }, {
+        "macroTopic" : "Recursion",
+        "level" : "difficile",
+        "questionId" : "REC_D3",
+        "question" : "What will happen if the base case in a recursive function is defined incorrectly?",
+        "options" : [ "The recursion will not stop, leading to a stack overflow", "The function will terminate correctly", "The program will throw a compile-time error", "The function will return a null value" ],
+        "correctAnswer" : "The recursion will not stop, leading to a stack overflow"
+      } ]
+    }
+  }, {
+    "macroTopic" : "Polymorphism",
+    "levels" : {
+      "facile" : [ {
+        "macroTopic" : "Polymorphism",
+        "level" : "facile",
+        "questionId" : "POL_F1",
+        "question" : "Quale dei seguenti concetti è associato al polimorfismo in Java?",
+        "options" : [ "Metodi con lo stesso nome ma comportamenti diversi", "Metodi con lo stesso comportamento in classi diverse", "Creazione di oggetti con lo stesso tipo", "None of the above" ],
+        "correctAnswer" : "Metodi con lo stesso nome ma comportamenti diversi"
+      } ],
+      "medio" : [ {
+        "macroTopic" : "Polymorphism",
+        "level" : "medio",
+        "questionId" : "POL_M1",
+        "question" : "Come si definisce il polimorfismo in Java?",
+        "options" : [ "Come la capacità di un oggetto di prendere molte forme", "Come la capacità di una classe di estendersi", "Come la capacità di un oggetto di eseguire più metodi", "None of the above" ],
+        "correctAnswer" : "Come la capacità di un oggetto di prendere molte forme"
+      } ],
+      "difficile" : [ {
+        "macroTopic" : "Polymorphism",
+        "level" : "difficile",
+        "questionId" : "POL_D1",
+        "question" : "In che modo il polimorfismo aiuta nella progettazione dei sistemi?",
+        "options" : [ "Rende il codice più rigido", "Permette di definire una struttura fissa", "Favorisce la generalizzazione e riutilizzo del codice", "Aumenta la complessità del codice" ],
+        "correctAnswer" : "Favorisce la generalizzazione e riutilizzo del codice"
+      } ]
+    }
+  } ]
 }

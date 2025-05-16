@@ -1,27 +1,49 @@
+// src/main/java/com/progetto/model/Exercise.java
 package com.progetto.model;
 
 import java.util.List;
-import java.util.Map;
 
 public abstract class Exercise {
     private String macroTopic;
-    // Mappa dei livelli: chiave = livello ("facile", "medio", "difficile"), valore = lista di domande
-    private Map<String, List<Question>> levels;
+    private String level;
+    private String questionId;
+    private String question;
+    private List<String> options;
+    private String correctAnswer;
 
-    public Exercise() {
+    public Exercise() {}
+
+    public Exercise(String macroTopic, String level, String questionId,
+                    String question, List<String> options, String correctAnswer) {
+        this.macroTopic    = macroTopic;
+        this.level         = level;
+        this.questionId    = questionId;
+        this.question      = question;
+        this.options       = options;
+        this.correctAnswer = correctAnswer;
     }
 
-    public Exercise(String macroTopic, Map<String, List<Question>> levels) {
-        this.macroTopic = macroTopic;
-        this.levels = levels;
-    }
+    public String getMacroTopic()      { return macroTopic; }
+    public void   setMacroTopic(String t) { this.macroTopic = t; }
 
-    public String getMacroTopic() { return macroTopic; }
-    public void setMacroTopic(String macroTopic) { this.macroTopic = macroTopic; }
+    public String getLevel()           { return level; }
+    public void   setLevel(String l)      { this.level = l; }
 
-    public Map<String, List<Question>> getLevels() { return levels; }
-    public void setLevels(Map<String, List<Question>> levels) { this.levels = levels; }
+    public String getQuestionId()      { return questionId; }
+    public void   setQuestionId(String id) { this.questionId = id; }
 
-    // Metodo astratto: valutare la risposta a una domanda
+    public String getQuestion()        { return question; }
+    public void   setQuestion(String q)   { this.question = q; }
+
+    public List<String> getOptions()   { return options; }
+    public void         setOptions(List<String> opts) { this.options = opts; }
+
+    public String getCorrectAnswer()   { return correctAnswer; }
+    public void   setCorrectAnswer(String a) { this.correctAnswer = a; }
+
+    /**
+     * Ritorna true se l’answer passata coincide (case‐insensitive)
+     * con la risposta corretta della domanda specificata.
+     */
     public abstract boolean evaluateAnswer(String questionId, String answer);
 }

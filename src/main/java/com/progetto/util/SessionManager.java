@@ -5,6 +5,7 @@ import java.util.*;
 
 public class SessionManager {
     private static String currentUserId;
+    private static String currentUserRole;
 
     // mappa userId → liste di date di accesso
     private static final Map<String, List<LocalDate>> loginDates = new HashMap<>();
@@ -32,5 +33,12 @@ public class SessionManager {
      */
     public static List<LocalDate> getLoginDates(String userId) {
         return loginDates.getOrDefault(userId, Collections.emptyList());
+    }
+
+       public static void setCurrentUserRole(String role) {
+            currentUserRole = role;
+        }
+   public static String getCurrentUserRole() {
+        return currentUserRole;
     }
 }

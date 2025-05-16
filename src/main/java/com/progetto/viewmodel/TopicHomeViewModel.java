@@ -1,13 +1,12 @@
 package com.progetto.viewmodel;
 
-import com.progetto.model.MultipleChoiceExercise;
-import com.progetto.model.QuestionResult;
+import com.progetto.model.MacroTopicEntry;
+import com.progetto.model.Question;
 import com.progetto.repository.ExerciseRepository;
 import com.progetto.repository.UserRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,41 +14,41 @@ import java.util.List;
  */
 public class TopicHomeViewModel {
 
-    private final ExerciseRepository exerciseRepository;
-    private final UserRepository userRepository;
+    private final ExerciseRepository exerciseRepository = new ExerciseRepository();
+    private final UserRepository   userRepository     = new UserRepository();
 
-    private String topicName;         // es. "OOP"
-    private String topicDescription;  // se presente nel JSON o definito altrove
-    private final ObservableList<String> questionIds; // elenca le questionId (es. "OOP_F1", "OOP_F2"...)
+    private String topicName;
+    private String topicDescription;
+    private final ObservableList<String> questionIds = FXCollections.observableArrayList();
 
-    // Per semplicità, usiamo lo stesso metodo statico di ExercisesViewModel per sapere il topic selezionato
+
     public TopicHomeViewModel() {
-        exerciseRepository = new ExerciseRepository();
-        userRepository = new UserRepository();
-        questionIds = FXCollections.observableArrayList();
+        // eventuale setup
     }
 
+    /** Carica nome, descrizione e elenco di questionId per il topic selezionato */
     public void loadTopicDetails() {
         String selectedTopic = ExercisesViewModel.getSelectedTopic();
-        // Oppure crea un TopicHomeViewModel.setSelectedTopic(...) se preferisci tenerli separati
+        List<MacroTopicEntry> entries = exerciseRepository.getAllEntries();
 
-        // Cerchiamo l'esercizio corrispondente
-        var exercises = exerciseRepository.getAllExercises();
-        if (exercises != null) {
-            for (MultipleChoiceExercise ex : exercises) {
-                if (ex.getMacroTopic().equalsIgnoreCase(selectedTopic)) {
-                    // topicName
-                    topicName = ex.getMacroTopic();
-                    // Per la descrizione, potresti aggiungerla al JSON o usare un campo personalizzato
-                    topicDescription = "Breve descrizione di " + ex.getMacroTopic(); // placeholder
+        for (MacroTopicEntry entry : entries) {
+            if (entry.getMacroTopic().equalsIgnoreCase(selectedTopic)) {
+                topicName = entry.getMacroTopic();
+                topicDescription = "Breve descrizione di " + topicName; // placeholder
 
-                    // Aggiungiamo le questionId del livello "facile", "medio", "difficile"...
-                    // Oppure solo di un livello
-                    ex.getLevels().forEach((level, questions) -> {
-                        questions.forEach(q -> questionIds.add(q.getQuestionId()));
-                    });
-                    break;
-                }
+                // reset e popolamento questionIds
+                questionIds.clear();
+                // livello facile
+                entry.getLevels().getFacile()
+                        .forEach(q -> questionIds.add(q.getQuestionId()));
+                // livello medio
+                entry.getLevels().getMedio()
+                        .forEach(q -> questionIds.add(q.getQuestionId()));
+                // livello difficile
+                entry.getLevels().getDifficile()
+                        .forEach(q -> questionIds.add(q.getQuestionId()));
+
+                break;
             }
         }
     }
@@ -70,14 +69,10 @@ public class TopicHomeViewModel {
      * Controlla se una domanda è stata completata correttamente dall'utente corrente.
      */
     public boolean isQuestionCompleted(String questionId) {
-        // Carichiamo l'utente corrente (dipende da come gestisci il login)
-        // In un'app reale potresti avere un "SessionManager" con l'utente loggato
-        // Qui semplifichiamo, cercando un utente "corrente" a scopo dimostrativo
         var allUsers = userRepository.getAllUsers();
         if (allUsers.isEmpty()) return false;
-        var currentUser = allUsers.get(0); // placeholder: prendi il primo utente, o quello loggato
+        var currentUser = allUsers.get(0); // sostituire con SessionManager.getCurrentUserId()
 
-        // Verifichiamo se in currentUser.progress c'è un questionResult con questionId e correct = true
         if (currentUser.getProgress() != null) {
             for (var prog : currentUser.getProgress()) {
                 if (prog.getQuestionResults() != null) {
@@ -92,12 +87,8 @@ public class TopicHomeViewModel {
         return false;
     }
 
-    /**
-     * Se vuoi memorizzare la domanda selezionata (es. "OOP_F1") in un ViewModel statico
-     * per poi navigare a ExercisesView, puoi farlo qui:
-     */
+
     public void setSelectedQuestion(String questionId) {
-        // Esempio: ExercisesViewModel.setSelectedQuestionId(questionId);
-        // Oppure gestisci la logica di navigazione in un'altra classe
+        ExercisesViewModel.setSelectedQuestionId(questionId);
     }
 }

@@ -1,7 +1,9 @@
 package com.progetto.view;
 
+import com.progetto.viewmodel.ExercisesViewModel;
 import com.progetto.viewmodel.PathViewModel;
 import com.progetto.viewmodel.MacroTopicModel;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -65,7 +67,7 @@ public class PathController implements Initializable {
         // Rimuove precedenti elementi
         pathPane.getChildren().removeIf(n -> "path-node".equals(n.getUserData()));
 
-        List<MacroTopicModel> topics = vm.getTopics();
+        ObservableList<String> topics = vm.getTopics();
         if (topics.isEmpty()) return;
 
         double w = pathPane.getWidth();
@@ -107,38 +109,35 @@ public class PathController implements Initializable {
         }
 
         // Disegna nodi come card
-        for (int i = 0; i < centers.size(); i++) {
-            MacroTopicModel m = topics.get(i);
-            Point2D pos = centers.get(i);
-
-            Rectangle rect = new Rectangle(pos.getX(), pos.getY(), NODE_WIDTH, NODE_HEIGHT);
-            rect.setArcWidth(CORNER_RADIUS * 2);
-            rect.setArcHeight(CORNER_RADIUS * 2);
-            Color fill = m.isUnlocked() ? Color.web("#FCFCFF") : Color.web("#F5F5F5");
-            rect.setFill(fill);
-            rect.setStroke(m.isUnlocked() ? Color.web("#42A5F5") : Color.web("#CCCCCC"));
-            rect.setStrokeWidth(2);
-            rect.setEffect(new DropShadow(6, Color.gray(0, 0.25)));
-            rect.setUserData("path-node");
-
-            Label title = new Label(m.getTitle());
-            title.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
-            title.setTextFill(Color.web("#37474F"));
-            title.setLayoutX(pos.getX() + 16);
-            title.setLayoutY(pos.getY() + (NODE_HEIGHT - title.getFont().getSize()) / 2);
-            title.setUserData("path-node");
-
-            Group card = new Group(rect, title);
-            card.setCursor(Cursor.HAND);
-            card.setUserData("path-node");
-            card.setOnMouseClicked(e -> onNodeClick(m, e));
-
-            // Hover effect
-            card.setOnMouseEntered(e -> rect.setFill(Color.web("#E3F2FD")));
-            card.setOnMouseExited(e -> rect.setFill(fill));
-
+// NUOVO: itera sui titoli (String)
+        for (String title : vm.getTopics()) {
+            // usa title al posto di m.getName()
+            double x = 50;
+            double y = 100 + 1 * (NODE_HEIGHT + 20);
+            Rectangle rect = new Rectangle(x, y, NODE_WIDTH, NODE_HEIGHT);
+            Label lbl = new Label(title);
+            // …
+            Group card = new Group(rect, lbl);
+            card.setOnMouseClicked(e -> {
+                ExercisesViewModel.setSelectedTopic(title);
+                try {
+                    Parent exercisesRoot = FXMLLoader.load(
+                            getClass().getResource("/view/ExercisesView.fxml")
+                    );
+                    Stage st = (Stage) pathPane.getScene().getWindow();
+                    st.setScene(new Scene(exercisesRoot, 900, 600));
+                    st.show();
+                } catch (IOException ex) {
+                    new Alert(
+                            Alert.AlertType.ERROR,
+                            "Impossibile caricare esercizi",
+                            ButtonType.OK
+                    ).showAndWait();
+                }
+            });
             pathPane.getChildren().add(card);
         }
+
     }
 
     private void onNodeClick(MacroTopicModel m, MouseEvent event) {

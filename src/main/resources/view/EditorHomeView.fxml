@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.progetto.view.EditorHomeController"
+            stylesheets="@../assets/styles/home.css"
+            prefWidth="900" prefHeight="600">
+
+    <top>
+        <HBox styleClass="nav-bar" spacing="10">
+            <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+            <Label text="🛠 Editor Dashboard" styleClass="nav-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <!-- logoutButton -->
+            <Button fx:id="logoutButton"
+                    text="Logout"
+                    onAction="#onLogout"
+                    styleClass="btn-nav"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20">
+            <!-- createExerciseButton -->
+            <Button fx:id="createExerciseButton"
+                    text="➕ Crea Esercizio"
+                    onAction="#onCreateExercise"
+                    styleClass="btn-action-large"/>
+            <!-- editExercisesButton -->
+            <Button fx:id="editExercisesButton"
+                    text="✏️ Modifica Esercizi"
+                    onAction="#onEditExercises"
+                    styleClass="btn-primary"/>
+        </VBox>
+    </center>
+</BorderPane>
+

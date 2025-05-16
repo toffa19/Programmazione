@@ -1,5 +1,6 @@
 package com.progetto.viewmodel;
 
+import com.progetto.model.MacroTopicEntry;
 import com.progetto.model.MultipleChoiceExercise;
 import com.progetto.model.Question;
 import com.progetto.model.User;
@@ -7,7 +8,10 @@ import com.progetto.repository.ExerciseRepository;
 import com.progetto.repository.UserRepository;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -19,6 +23,10 @@ public class ExercisesViewModel {
     private final UserRepository userRepository;
     private final List<Question> questions; // Lista di tutte le domande per il topic
     private static String selectedTopic;
+    private static TopicHomeViewModel selectedMyTopic;
+    private final ObservableList<MultipleChoiceExercise> exercises = FXCollections.observableArrayList();
+    private final ExerciseRepository repo = new ExerciseRepository();
+    private static final StringProperty selectedQuestionId = new SimpleStringProperty();
 
     private int currentQuestionIndex = 0;
     private int consecutiveCorrect = 0;
@@ -42,23 +50,51 @@ public class ExercisesViewModel {
         return selectedTopic;
     }
 
+
+
+    private void loadExercises() {
+
+        exercises.clear();
+        String topic = selectedMyTopic.getTopicName();
+        for (MacroTopicEntry entry : repo.getAllEntries()) {
+            if (entry.getMacroTopic().equals(topic)) {
+                exercises.addAll(entry.getLevels().getFacile());
+                exercises.addAll(entry.getLevels().getMedio());
+                exercises.addAll(entry.getLevels().getDifficile());
+                break;
+            }
+        }
+    }
+
+    public static void setSelectedQuestionId(String qid) {
+        selectedQuestionId.set(qid);
+    }
+
+
     /**
      * Carica tutte le domande per il topic selezionato (da tutti i livelli) dal JSON.
      */
     public void loadQuestionsForTopic() {
-        questions.clear();
-        var allExercises = exerciseRepository.getAllExercises();
-        if (allExercises != null) {
-            for (MultipleChoiceExercise exercise : allExercises) {
-                if (exercise.getMacroTopic().equalsIgnoreCase(selectedTopic)) {
-                    exercise.getLevels().forEach((level, qList) -> {
-                        questions.addAll(qList);
-                    });
-                }
+        // recupera la stringa del topic selezionato
+        String topic = selectedTopic;  // senza .get()
+        // svuota la lista degli esercizi correnti
+        exercises.clear();
+
+        // itera su tutti i MacroTopicEntry
+        for (MacroTopicEntry entry : exerciseRepository.getAllEntries()) {
+            if (entry.getMacroTopic().equalsIgnoreCase(topic)) {
+                // aggiunge gli esercizi di tutti i livelli
+                exercises.addAll(entry.getLevels().getFacile());
+                exercises.addAll(entry.getLevels().getMedio());
+                exercises.addAll(entry.getLevels().getDifficile());
+                break;
             }
         }
+
+        // riparte dal primo esercizio
         currentQuestionIndex = 0;
     }
+
 
     public List<Question> getQuestions() {
         return questions;

@@ -6,6 +6,7 @@
     "firstName" : "Mario",
     "lastName" : null,
     "email" : "mario.rossi@example.com",
+    "role" : "student",
     "country" : "",
     "language" : "",
     "progress" : [ {
@@ -101,9 +102,22 @@
     "firstName" : "Luca",
     "lastName" : null,
     "email" : "luca.verdi@example.com",
+    "role" : "student",
     "country" : "",
     "language" : "",
     "progress" : [ ],
+    "loginDates" : null
+  }, {
+    "id" : "u1747240762211",
+    "username" : "gigi",
+    "password" : "gigi",
+    "firstName" : "gigi",
+    "lastName" : null,
+    "email" : null,
+    "role" : "editor",
+    "country" : null,
+    "language" : null,
+    "progress" : null,
     "loginDates" : null
   } ]
 }

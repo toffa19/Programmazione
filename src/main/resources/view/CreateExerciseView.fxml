@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.progetto.view.CreateExerciseController"
+            prefWidth="800" prefHeight="600">
+
+    <children>
+        <VBox fx:id="rootVBox"
+              spacing="15"
+              AnchorPane.topAnchor="10"
+              AnchorPane.leftAnchor="10"
+              AnchorPane.rightAnchor="10"
+              AnchorPane.bottomAnchor="10">
+
+            <!-- Titolo -->
+            <Label text="Crea Nuovo Esercizio"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <!-- Sezione principale: Topic, Livello, ID, Testo domanda -->
+            <GridPane hgap="10" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="75"/>
+                </columnConstraints>
+
+                <Label text="Topic:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="topicCombo"
+                          promptText="Seleziona topic"
+                          GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Livello:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="levelCombo"
+                          promptText="facile / medio / difficile"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="ID Domanda:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="idField"
+                           promptText="es. OOP_F1"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Testo Domanda:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextArea fx:id="questionArea"
+                          promptText="Inserisci qui la domanda"
+                          prefRowCount="3" wrapText="true"
+                          GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <Separator/>
+
+            <!-- Sezione risposte -->
+            <Label text="Opzioni di risposta"
+                   style="-fx-font-size: 16px;"/>
+
+            <GridPane hgap="10" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="10"/>
+                    <ColumnConstraints percentWidth="45"/>
+                    <ColumnConstraints percentWidth="45"/>
+                </columnConstraints>
+
+                <Label text="A)" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="opt0"
+                           promptText="Opzione A"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="B)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="opt1"
+                           promptText="Opzione B"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="C)" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="opt2"
+                           promptText="Opzione C"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="D)" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="opt3"
+                           promptText="Opzione D"
+                           GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- Selezione risposta corretta e pulsanti -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Risposta Corretta:"/>
+                <ComboBox fx:id="correctCombo"
+                          promptText="Seleziona risposta"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="createExButton"
+                        text="Crea Esercizio"
+                        style="-fx-font-size: 14px; -fx-padding: 8px 16px;"
+                        maxWidth="200"/>
+                <Button fx:id="addAnotherButton"
+                        text="+ Aggiungi un altro"
+                        style="-fx-font-size: 14px; -fx-padding: 8px 16px;"
+                        maxWidth="200"/>
+            </HBox>
+
+        </VBox>
+    </children>
+</AnchorPane>

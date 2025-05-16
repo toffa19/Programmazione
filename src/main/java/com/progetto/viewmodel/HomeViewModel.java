@@ -56,7 +56,7 @@ public class HomeViewModel {
     }
 
     private void computeCompletion(User user) {
-        Set<String> allTopics = exRepo.getAllExercises().stream()
+        Set<String> allTopics = exRepo.getAllEntries().stream()
                 .map(e -> e.getMacroTopic())
                 .collect(Collectors.toSet());
         long passed = 0;

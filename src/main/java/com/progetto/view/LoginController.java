@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class LoginController {
 
     @FXML private TextField usernameField;
@@ -27,19 +29,32 @@ public class LoginController {
 
         loginButton.setOnAction(e -> {
             if (viewModel.login()) {
-                // L'utente loggato è già memorizzato nel SessionManager dal viewModel.login()
-                System.out.println("Login successful for user: " + SessionManager.getCurrentUserId());
+                String role = SessionManager.getCurrentUserRole();
                 try {
-                    Parent homeRoot = FXMLLoader.load(getClass().getResource("/view/HomeView.fxml"));
+                    // Carico la vista corretta in base al ruolo
+                    String fxml = "editor".equals(role)
+                            ? "/view/EditorHomeView.fxml"
+                            : "/view/HomeView.fxml";
+                    Parent homeRoot = FXMLLoader.load(
+                            getClass().getResource(fxml)
+                    );
                     Stage stage = (Stage) loginButton.getScene().getWindow();
                     stage.setScene(new Scene(homeRoot, 900, 600));
                     stage.show();
-                } catch (Exception ex) {
+                } catch (IOException ex) {
                     ex.printStackTrace();
+                    new Alert(
+                            Alert.AlertType.ERROR,
+                            "Errore nel caricamento della pagina.",
+                            ButtonType.OK
+                    ).showAndWait();
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Credenziali non valide!", ButtonType.OK);
-                alert.showAndWait();
+                new Alert(
+                        Alert.AlertType.ERROR,
+                        "Credenziali non valide!",
+                        ButtonType.OK
+                ).showAndWait();
             }
         });
 

@@ -1,7 +1,7 @@
+// src/main/java/com/progetto/model/MultipleChoiceExercise.java
 package com.progetto.model;
 
 import java.util.List;
-import java.util.Map;
 
 public class MultipleChoiceExercise extends Exercise {
 
@@ -9,21 +9,19 @@ public class MultipleChoiceExercise extends Exercise {
         super();
     }
 
-    public MultipleChoiceExercise(String macroTopic, Map<String, List<Question>> levels) {
-        super(macroTopic, levels);
+    public MultipleChoiceExercise(String macroTopic,
+                                  String level,
+                                  String questionId,
+                                  String question,
+                                  List<String> options,
+                                  String correctAnswer) {
+        super(macroTopic, level, questionId, question, options, correctAnswer);
     }
 
     @Override
     public boolean evaluateAnswer(String questionId, String answer) {
-        // Scorre tutti i livelli per trovare la domanda
-        for (List<Question> questions : getLevels().values()) {
-            for (Question q : questions) {
-                if (q.getQuestionId().equals(questionId)) {
-                    // Confronta la risposta fornita (ignorando eventuali differenze di maiuscole/minuscole)
-                    return q.getCorrectAnswer().equalsIgnoreCase(answer);
-                }
-            }
-        }
-        return false; // Se la domanda non viene trovata, o la risposta è errata
+        // Se coincide l’ID della domanda, confronto la risposta
+        if (!getQuestionId().equals(questionId)) return false;
+        return getCorrectAnswer().equalsIgnoreCase(answer);
     }
 }

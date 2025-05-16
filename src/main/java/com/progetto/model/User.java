@@ -11,6 +11,9 @@ public class User {
     private String lastName;
     private String email;
 
+    private String role;
+
+
     // Nuovi campi per il profilo
     private String nickName;
     private String country;
@@ -42,6 +45,9 @@ public class User {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
 //    public String getNickName() { return nickName; }
 //    public void setNickName(String nickName) { this.nickName = nickName; }
