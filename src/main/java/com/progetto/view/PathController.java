@@ -41,23 +41,19 @@ public class PathController implements Initializable {
 
     private final PathViewModel vm = new PathViewModel();
 
-    private static final double NODE_WIDTH     = 160;
-    private static final double NODE_HEIGHT    = 48;
-    private static final double CORNER_RADIUS  = 8;
-    private static final double LINE_WIDTH     = 4;
+    private static final double NODE_WIDTH    = 160;
+    private static final double NODE_HEIGHT   = 48;
+    private static final double CORNER_RADIUS = 8;
+    private static final double LINE_WIDTH    = 3;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // 1) chiedi al VM di caricare i topic
         vm.loadPathTopics();
-        // 2) disegna il percorso
         drawPath();
 
-        // ridisegna al ridimensionare
-        pathPane.widthProperty().addListener((o,oldV,newV)-> drawPath());
-        pathPane.heightProperty().addListener((o,oldV,newV)-> drawPath());
+        pathPane.widthProperty().addListener((o, oldV, newV) -> drawPath());
+        pathPane.heightProperty().addListener((o, oldV, newV) -> drawPath());
 
-        // navigazione home/profile
         homeButton.setOnMouseClicked(this::navigateToHome);
         profileIcon.setOnMouseClicked(this::navigateToHome);
     }
@@ -134,58 +130,43 @@ public class PathController implements Initializable {
             title.setUserData("path-node");
 
             Group card = new Group(rect, title);
-            card.setCursor(Cursor.HAND);
             card.setUserData("path-node");
 
-            final String topicTitle = m.getTitle();  // variabile effectively final
-            card.setOnMouseClicked(e -> onNodeClick(topicTitle, e));
-
-            // hover effect
-            card.setOnMouseEntered(e -> rect.setFill(Color.web("#E3F2FD")));
-            card.setOnMouseExited(e -> rect.setFill(fill));
+            if (m.isUnlocked()) {
+                card.setCursor(Cursor.HAND);
+                card.setOnMouseClicked(e -> onNodeClick(m.getTitle(), e));
+                card.setOnMouseEntered(e -> rect.setFill(Color.web("#E3F2FD")));
+                card.setOnMouseExited(e -> rect.setFill(fill));
+            } else {
+                card.setCursor(Cursor.DEFAULT);
+                card.setOnMouseClicked(e -> new Alert(Alert.AlertType.INFORMATION,
+                        "Topic non ancora sbloccato. Completa il precedente con meno di 3 errori per sbloccarlo.",
+                        ButtonType.OK).showAndWait());
+            }
 
             pathPane.getChildren().add(card);
         }
     }
 
     private void onNodeClick(String topicTitle, MouseEvent event) {
-        // segna passed e sblocca
         vm.markTopicPassed(topicTitle);
-
-        // imposta topic selezionato
         ExercisesViewModel.setSelectedTopic(topicTitle);
-
         try {
-            // 1) Verifica che il resource path sia corretto
-            URL fxmlUrl = getClass().getResource("/view/ExercisesView.fxml");
-            System.out.println("DEBUG: ExercisesView.fxml URL = " + fxmlUrl);  // stampa null se il file non c'è
-
-            // 2) Carica l'FXML
-            Parent root = FXMLLoader.load(fxmlUrl);
-            Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
-            st.setScene(new Scene(root, 900, 600));
-            st.show();
-
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ExercisesView.fxml"));
+            Stage st = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            st.setScene(new Scene(root, 900, 600)); st.show();
         } catch (IOException ex) {
-            // 3) Stampa lo stack trace per capire esattamente l’errore
-            ex.printStackTrace();
-
-            // 4) Mostra in alert anche il messaggio dell’eccezione
-            new Alert(Alert.AlertType.ERROR,
-                    "Impossibile caricare gli esercizi:\n" + ex.getMessage(),
-                    ButtonType.OK)
-                    .showAndWait();
+            new Alert(Alert.AlertType.ERROR,"Impossibile caricare gli esercizi.",ButtonType.OK).showAndWait();
         }
     }
 
     private void navigateToHome(MouseEvent event) {
         try {
             Parent home = FXMLLoader.load(getClass().getResource("/view/HomeView.fxml"));
-            Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
-            st.setScene(new Scene(home, 900, 600));
-            st.show();
+            Stage st = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            st.setScene(new Scene(home, 900, 600)); st.show();
         } catch (IOException ex) {
-            new Alert(Alert.AlertType.ERROR, "Impossibile tornare alla home.", ButtonType.OK).showAndWait();
+            new Alert(Alert.AlertType.ERROR,"Impossibile tornare alla home.",ButtonType.OK).showAndWait();
         }
     }
 }
