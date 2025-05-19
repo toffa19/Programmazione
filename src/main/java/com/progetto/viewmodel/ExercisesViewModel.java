@@ -1,8 +1,8 @@
+// src/main/java/com/progetto/viewmodel/ExercisesViewModel.java
 package com.progetto.viewmodel;
 
 import com.progetto.model.MacroTopicEntry;
 import com.progetto.model.MultipleChoiceExercise;
-import com.progetto.model.Question;
 import com.progetto.model.User;
 import com.progetto.repository.ExerciseRepository;
 import com.progetto.repository.UserRepository;
@@ -21,206 +21,148 @@ public class ExercisesViewModel {
 
     private final ExerciseRepository exerciseRepository;
     private final UserRepository userRepository;
-    private final List<Question> questions; // Lista di tutte le domande per il topic
-    private static String selectedTopic;
-    private static TopicHomeViewModel selectedMyTopic;
-    private final ObservableList<MultipleChoiceExercise> exercises = FXCollections.observableArrayList();
-    private final ExerciseRepository repo = new ExerciseRepository();
-    private static final StringProperty selectedQuestionId = new SimpleStringProperty();
 
-    private int currentQuestionIndex = 0;
-    private int consecutiveCorrect = 0;
-    private final int thresholdForNextLevel = 3;
-    private int errorCount = 0;
+    private final List<MultipleChoiceExercise> exercises = new ArrayList<>();
+    private int currentIndex = 0;
+    private int wrongAnswersCount = 0;
 
     private Timeline timer;
     private int elapsedSeconds = 0;
 
+    private final StringProperty questionText = new SimpleStringProperty();
+    private final ObservableList<String> options = FXCollections.observableArrayList();
+    private final StringProperty selectedAnswer = new SimpleStringProperty();
+    private final StringProperty timerText = new SimpleStringProperty("00:00");
+
+    private static String selectedTopic;
+    private static String selectedQuestionId;
+
     public ExercisesViewModel() {
-        exerciseRepository = new ExerciseRepository();
-        userRepository = new UserRepository();
-        questions = new ArrayList<>();
+        this.exerciseRepository = new ExerciseRepository();
+        this.userRepository = new UserRepository();
     }
 
     public static void setSelectedTopic(String topic) {
         selectedTopic = topic;
     }
-
     public static String getSelectedTopic() {
         return selectedTopic;
     }
-
-
-
-    private void loadExercises() {
-
-        exercises.clear();
-        String topic = selectedMyTopic.getTopicName();
-        for (MacroTopicEntry entry : repo.getAllEntries()) {
-            if (entry.getMacroTopic().equals(topic)) {
-                exercises.addAll(entry.getLevels().getFacile());
-                exercises.addAll(entry.getLevels().getMedio());
-                exercises.addAll(entry.getLevels().getDifficile());
-                break;
-            }
-        }
+    public static void setSelectedQuestionId(String questionId) {
+        selectedQuestionId = questionId;
     }
-
-    public static void setSelectedQuestionId(String qid) {
-        selectedQuestionId.set(qid);
+    public static String getSelectedQuestionId() {
+        return selectedQuestionId;
     }
-
 
     /**
-     * Carica tutte le domande per il topic selezionato (da tutti i livelli) dal JSON.
+     * Carica TUTTI gli esercizi per il topic selezionato: facile - medio - difficile
      */
-    public void loadQuestionsForTopic() {
-        // recupera la stringa del topic selezionato
-        String topic = selectedTopic;  // senza .get()
-        // svuota la lista degli esercizi correnti
-        exercises.clear();
+    public void loadExercises() {
+        if (selectedTopic == null) {
+            throw new IllegalStateException("Devi settare prima il topic con setSelectedTopic()");
+        }
 
-        // itera su tutti i MacroTopicEntry
+        exercises.clear();
         for (MacroTopicEntry entry : exerciseRepository.getAllEntries()) {
-            if (entry.getMacroTopic().equalsIgnoreCase(topic)) {
-                // aggiunge gli esercizi di tutti i livelli
+            if (entry.getMacroTopic().equals(selectedTopic)) {
                 exercises.addAll(entry.getLevels().getFacile());
                 exercises.addAll(entry.getLevels().getMedio());
                 exercises.addAll(entry.getLevels().getDifficile());
                 break;
             }
         }
-
-        // riparte dal primo esercizio
-        currentQuestionIndex = 0;
-    }
-
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public Question getCurrentQuestion() {
-        if (currentQuestionIndex >= 0 && currentQuestionIndex < questions.size()) {
-            return questions.get(currentQuestionIndex);
-        }
-        return null;
-    }
-
-    public void moveToNextQuestion() {
-        currentQuestionIndex++;
-    }
-
-    /**
-     * Aggiorna il progresso dell'utente per la domanda specificata e salva nel JSON.
-     */
-    public void updateUserProgress(String questionId, boolean correct) {
-        List<User> allUsers = userRepository.getAllUsers();
-        if (allUsers.isEmpty()) {
-            return;
-        }
-        // Per semplicità, usiamo il primo utente come quello loggato
-        User currentUser = allUsers.get(0);
-
-        if (currentUser.getProgress() == null) {
-            currentUser.setProgress(new ArrayList<>());
-        }
-        boolean progressFound = false;
-        for (var prog : currentUser.getProgress()) {
-            if (prog.getMacroTopic().equalsIgnoreCase(selectedTopic)) {
-                progressFound = true;
-                if (prog.getQuestionResults() == null) {
-                    prog.setQuestionResults(new ArrayList<>());
-                }
-                boolean found = false;
-                for (var qr : prog.getQuestionResults()) {
-                    if (qr.getQuestionId().equalsIgnoreCase(questionId)) {
-                        qr.setAttempts(qr.getAttempts() + 1);
-                        if (correct) {
-                            qr.setCorrect(true);
-                        }
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    var newQR = new com.progetto.model.QuestionResult(questionId, 1, correct);
-                    prog.getQuestionResults().add(newQR);
-                }
-                break;
-            }
-        }
-        // Se non esiste un Progress per questo topic, crealo
-        if (!progressFound) {
-            com.progetto.model.Progress newProg = new com.progetto.model.Progress();
-            newProg.setMacroTopic(selectedTopic);
-            newProg.setScore(0);
-            List<com.progetto.model.QuestionResult> newQRList = new ArrayList<>();
-            newQRList.add(new com.progetto.model.QuestionResult(questionId, 1, correct));
-            newProg.setQuestionResults(newQRList);
-            // Inizialmente, non abbiamo ancora registrato il tempo
-            newProg.setTime(null);
-            // Il flag "passed" sarà impostato alla fine dell'esercizio
-            newProg.setPassed(false);
-            currentUser.getProgress().add(newProg);
-        }
-        userRepository.updateUser(currentUser);
-    }
-
-    /**
-     * Aggiorna il tempo totale impiegato per il topic e segna il topic come superato se l'errore totale è inferiore a 3.
-     * Se nel JSON è già presente un tempo, mantiene quello migliore (il minore).
-     */
-    public void updateTopicTime() {
-        int timeTaken = elapsedSeconds;
-        List<User> allUsers = userRepository.getAllUsers();
-        if (allUsers.isEmpty()) return;
-        User currentUser = allUsers.get(0);
-        if (currentUser.getProgress() != null) {
-            for (var prog : currentUser.getProgress()) {
-                if (prog.getMacroTopic().equalsIgnoreCase(selectedTopic)) {
-                    // Gestione del tempo: se il tempo esistente è vuoto o maggiore, aggiorna
-                    String currentTimeStr = prog.getTime();
-                    int currentTime = (currentTimeStr != null && !currentTimeStr.isEmpty())
-                            ? Integer.parseInt(currentTimeStr)
-                            : Integer.MAX_VALUE;
-                    if (timeTaken < currentTime) {
-                        prog.setTime(String.valueOf(timeTaken));
-                    }
-                    // Segna il topic come superato se sono stati fatti meno di 3 errori durante l'esercizio
-                    prog.setPassed(errorCount < 3);
-                    break;
-                }
-            }
-        }
-        userRepository.updateUser(currentUser);
-    }
-
-    public void processAnswerResult(boolean correct) {
-        if (correct) {
-            consecutiveCorrect++;
+        wrongAnswersCount = 0;
+        currentIndex = 0;
+        if (!exercises.isEmpty()) {
+            loadCurrentQuestion();
         } else {
-            consecutiveCorrect = 0;
-            errorCount++;
-        }
-        if (consecutiveCorrect >= thresholdForNextLevel) {
-            System.out.println("Sbloccato il livello successivo per il topic: " + selectedTopic);
-            // Logica per passare al livello successivo (da integrare ulteriormente)
+            questionText.set("Nessun esercizio disponibile per: " + selectedTopic);
+            options.clear();
         }
     }
 
-    public int getErrorCount() {
-        return errorCount;
+    private void loadCurrentQuestion() {
+        MultipleChoiceExercise ex = exercises.get(currentIndex);
+        questionText.set(ex.getQuestion());
+        options.setAll(ex.getOptions());
+        selectedAnswer.set("");
+        selectedQuestionId = ex.getQuestionId();
     }
 
-    // Timer e backup progressivo
+    public void nextQuestion() {
+        if (hasNext()) {
+            currentIndex++;
+            loadCurrentQuestion();
+        }
+    }
+
+    public boolean hasNext() {
+        return currentIndex < exercises.size() - 1;
+    }
+
+    /**
+     * Valuta la risposta, incrementa wrongAnswersCount se sbagliata, salva l'utente e restituisce true se corretta
+     */
+    public boolean submitAnswer() {
+        String answer = selectedAnswer.get();
+        MultipleChoiceExercise ex = exercises.get(currentIndex);
+        boolean correct = ex.getCorrectAnswer().equals(answer);
+        if (!correct) {
+            wrongAnswersCount++;
+        }
+
+        // Salva il risultato sul primo utente
+        List<User> users = userRepository.getAllUsers();
+        if (!users.isEmpty()) {
+            User user = users.get(0);
+            userRepository.updateUser(user);
+        }
+        return correct;
+    }
+
+    // --- getters per il controller ---
+    public int getWrongAnswersCount() {
+        return wrongAnswersCount;
+    }
+
+    public int getTotalQuestionsCount() {
+        return exercises.size();
+    }
+
+    /**
+     * Restituisce la risposta corretta dell'esercizio corrente
+     */
+    public String getCorrectAnswer() {
+        if (exercises.isEmpty() || currentIndex < 0 || currentIndex >= exercises.size()) {
+            return null;
+        }
+        return exercises.get(currentIndex).getCorrectAnswer();
+    }
+
+    // --- proprietà per il binding in UI ---
+    public StringProperty questionTextProperty() {
+        return questionText;
+    }
+    public ObservableList<String> getOptions() {
+        return options;
+    }
+    public StringProperty selectedAnswerProperty() {
+        return selectedAnswer;
+    }
+    public StringProperty timerTextProperty() {
+        return timerText;
+    }
+
     public void startTimer() {
-        timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        stopTimer();
+        elapsedSeconds = 0;
+        timerText.set("00:00");
+        timer = new Timeline(new KeyFrame(Duration.seconds(1), evt -> {
             elapsedSeconds++;
-            System.out.println("Tempo: " + elapsedSeconds + " secondi");
-            if (elapsedSeconds % 30 == 0) {
-                backupProgress();
-            }
+            int m = elapsedSeconds / 60;
+            int s = elapsedSeconds % 60;
+            timerText.set(String.format("%02d:%02d", m, s));
         }));
         timer.setCycleCount(Timeline.INDEFINITE);
         timer.play();
@@ -230,11 +172,6 @@ public class ExercisesViewModel {
         if (timer != null) {
             timer.stop();
         }
-    }
-
-    private void backupProgress() {
-        System.out.println("Backup progressivo...");
-        // Puoi chiamare userRepository.updateUser(...) per salvare lo stato corrente
     }
 
     public int getElapsedSeconds() {

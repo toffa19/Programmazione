@@ -17,6 +17,9 @@ public class Question {
         this.options = options;
         this.correctAnswer = correctAnswer;
     }
+    public boolean evaluateAnswer(String answer) {
+        return this.correctAnswer.equalsIgnoreCase(answer);
+    }
 
     // Getters & Setters
     public String getQuestionId() { return questionId; }
