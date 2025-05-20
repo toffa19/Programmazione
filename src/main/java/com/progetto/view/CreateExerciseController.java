@@ -23,7 +23,6 @@ public class CreateExerciseController {
     @FXML private ComboBox<String> correctCombo;
     @FXML private Button createExButton;
     @FXML private VBox rootVBox;
-    @FXML private Button addAnotherButton;    // ← nuovo
     @FXML private ScrollPane scrollPane;
     @FXML private VBox formsContainer;
     @FXML private javafx.scene.control.Button saveAllButton;
@@ -32,7 +31,6 @@ public class CreateExerciseController {
 
     @FXML public void initialize() {
         // Ogni click aggiunge una nuova scheda **vuota**
-        addAnotherButton.setOnAction(e -> addForm());
 
         topicCombo.setItems(vm.getTopics());
         levelCombo.setItems(vm.getLevels());
@@ -58,7 +56,6 @@ public class CreateExerciseController {
             vm.createAndExit();
             // opzionale: se vuoi chiudere/navigare via FXMLLoader.load(...)
         });
-        addAnotherButton.setOnAction(e -> vm.createAndContinue());
 
         homeButton.setOnAction(e -> {
             closeAndGoBack(e);

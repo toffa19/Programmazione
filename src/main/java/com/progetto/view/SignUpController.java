@@ -1,78 +1,82 @@
 package com.progetto.view;
 
-import com.progetto.viewmodel.SignUpViewModel;
+import com.progetto.model.User;
+import com.progetto.repository.UserRepository;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.Node;
+
+import java.io.IOException;
+import java.util.UUID;
 
 public class SignUpController {
 
-    @FXML private TextField nameField;
+    @FXML private TextField emailField;
+    @FXML private ComboBox<String> roleCombo;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
-    @FXML private RadioButton studentRadio;
-    @FXML private RadioButton editorRadio;
     @FXML private Button signUpButton;
     @FXML private Button goToLoginButton;
 
-    private final SignUpViewModel viewModel = new SignUpViewModel();
+    private final UserRepository userRepo = new UserRepository();
 
     @FXML
     public void initialize() {
-        // binding bidirezionale
-        nameField.textProperty().bindBidirectional(viewModel.nameProperty());
-        usernameField.textProperty().bindBidirectional(viewModel.usernameProperty());
-        passwordField.textProperty().bindBidirectional(viewModel.passwordProperty());
-        confirmPasswordField.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        // impostiamo i possibili ruoli
+        roleCombo.setItems(FXCollections.observableArrayList("student", "editor"));
+    }
 
-        // ToggleGroup per i ruoli
-        ToggleGroup group = new ToggleGroup();
-        studentRadio.setToggleGroup(group);
-        editorRadio.setToggleGroup(group);
-        // default su "Studente"
-        studentRadio.setSelected(true);
+    @FXML
+    private void onSignUp() {
+        String email    = emailField.getText().trim();
+        String role     = roleCombo.getValue();
+        String username = usernameField.getText().trim();
+        String pwd      = passwordField.getText();
+        String confirm  = confirmPasswordField.getText();
 
-        // bind scelto radio -> roleProperty
-        group.selectedToggleProperty().addListener((obs, oldT, newT) -> {
-            if (newT == editorRadio) viewModel.roleProperty().set("editor");
-            else                      viewModel.roleProperty().set("student");
-        });
+        if (email.isEmpty() || role == null || username.isEmpty() || pwd.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Compila tutti i campi (incluso ruolo).").showAndWait();
+            return;
+        }
+        if (!pwd.equals(confirm)) {
+            new Alert(Alert.AlertType.ERROR, "Le password non corrispondono.").showAndWait();
+            return;
+        }
 
-        signUpButton.setOnAction(e -> {
-            if (viewModel.signUp()) {
-                try {
-                    Parent homeRoot = FXMLLoader.load(
-                            getClass().getResource("/view/LoginView.fxml")
-                    );
-                    Stage stage = (Stage) signUpButton.getScene().getWindow();
-                    stage.setScene(new Scene(homeRoot, 400, 400));
-                    stage.show();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Registrazione fallita: password non corrispondono",
-                        ButtonType.OK).showAndWait();
-            }
-        });
+        // Creo nuovo utente, includendo il ruolo
+        User u = new User();
+        u.setId(UUID.randomUUID().toString());
+        u.setEmail(email);
+        u.setUsername(username);
+        u.setFirstName(username);  // manteniamo username anche come firstName
+        u.setPassword(pwd);
+        u.setRole(role);           // assegno il ruolo scelto
 
-        goToLoginButton.setOnAction(e -> {
-            try {
-                Parent loginRoot = FXMLLoader.load(
-                        getClass().getResource("/view/LoginView.fxml")
-                );
-                Stage stage = (Stage) goToLoginButton.getScene().getWindow();
-                stage.setScene(new Scene(loginRoot, 400, 400));
-                stage.show();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
+        userRepo.addUser(u);
+        new Alert(Alert.AlertType.INFORMATION, "Registrazione avvenuta con successo!").showAndWait();
+        goToLogin();
+    }
+
+    @FXML
+    private void onGoToLogin() {
+        goToLogin();
+    }
+
+    private void goToLogin() {
+        try {
+            Parent login = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
+            Stage stage = (Stage) goToLoginButton.getScene().getWindow();
+            stage.setScene(new Scene(login, 400, 400));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Impossibile aprire login.").showAndWait();
+        }
     }
 }

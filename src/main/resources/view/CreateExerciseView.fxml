@@ -92,10 +92,8 @@
                         text="Crea Esercizio"
                         style="-fx-font-size: 14px; -fx-padding: 8px 16px;"
                         maxWidth="200"/>
-                <Button fx:id="addAnotherButton"
-                        text="+ Aggiungi un altro"
-                        style="-fx-font-size: 14px; -fx-padding: 8px 16px;"
-                        maxWidth="200"/>
+                <Button fx:id="homeButton"   text="Home"/>
+
             </HBox>
 
         </VBox>

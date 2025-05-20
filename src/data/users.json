@@ -152,5 +152,23 @@
     "role" : "editor",
     "progress" : null,
     "loginDates" : null
+  }, {
+    "id" : "31cc3bb5-51ab-4924-862c-a54ff1c77a3d",
+    "username" : "test",
+    "password" : "test",
+    "firstName" : "test",
+    "email" : "test@gmail",
+    "role" : null,
+    "progress" : null,
+    "loginDates" : null
+  }, {
+    "id" : "5b74fbea-eabe-4e1c-ba34-e34821a9bfd1",
+    "username" : "student",
+    "password" : "s",
+    "firstName" : "student",
+    "email" : "student@gmail.com",
+    "role" : "student",
+    "progress" : null,
+    "loginDates" : null
   } ]
 }
