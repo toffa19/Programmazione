@@ -2,6 +2,7 @@ package com.progetto.viewmodel;
 
 import com.progetto.model.MacroTopicEntry;
 import com.progetto.model.MultipleChoiceExercise;
+import com.progetto.model.Progress;
 import com.progetto.model.User;
 import com.progetto.repository.ExerciseRepository;
 import com.progetto.repository.UserRepository;
@@ -9,6 +10,7 @@ import com.progetto.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -47,7 +49,6 @@ public class PathViewModel {
 
         // 3) Crea i modelli base
         for (String title : seenTitles) {
-            // Supponiamo MacroTopicModel(String title, String iconPath)
             topics.add(new MacroTopicModel(title, "/assets/images/path_icon_exercise.png"));
         }
 
@@ -58,10 +59,11 @@ public class PathViewModel {
         // 4) Sblocca sempre il primo
         topics.get(0).setUnlocked(true);
 
-        // 5) Recupera utente loggato
+        // 5) Recupera utente loggato (match sia per id che username)
         String currentUserId = SessionManager.getCurrentUserId();
         Optional<User> maybeUser = userRepository.getAllUsers().stream()
-                .filter(u -> currentUserId != null && currentUserId.equals(u.getId()))
+                .filter(u -> currentUserId != null &&
+                        (currentUserId.equals(u.getId()) || currentUserId.equals(u.getUsername())))
                 .findFirst();
 
         if (maybeUser.isEmpty()) {
@@ -69,12 +71,14 @@ public class PathViewModel {
         }
         User user = maybeUser.get();
 
-        // 6) Marca passed/unlock successivo, gestendo eventuale null progress
-        List<com.progetto.model.Progress> progressList =
-                user.getProgress() != null
-                        ? user.getProgress()
-                        : Collections.emptyList();
+        // Se manca il campo progress, inizializzalo e persisti
+        if (user.getProgress() == null) {
+            user.setProgress(new ArrayList<>());
+            userRepository.updateUser(user);
+        }
+        List<Progress> progressList = user.getProgress();
 
+        // 6) Marca passed e unlock del successivo
         for (int i = 0; i < topics.size(); i++) {
             MacroTopicModel mt = topics.get(i);
             boolean passed = progressList.stream()
@@ -100,23 +104,39 @@ public class PathViewModel {
     public void markTopicPassed(String title) {
         String currentUserId = SessionManager.getCurrentUserId();
         Optional<User> maybeUser = userRepository.getAllUsers().stream()
-                .filter(u -> currentUserId != null && currentUserId.equals(u.getId()))
+                .filter(u -> currentUserId != null &&
+                        (currentUserId.equals(u.getId()) || currentUserId.equals(u.getUsername())))
                 .findFirst();
 
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
-            List<com.progetto.model.Progress> progressList =
-                    user.getProgress() != null
-                            ? user.getProgress()
-                            : Collections.emptyList();
+
+            // Se manca il campo progress, inizializzalo
+            if (user.getProgress() == null) {
+                user.setProgress(new ArrayList<>());
+            }
+            List<Progress> progressList = user.getProgress();
 
             progressList.stream()
                     .filter(p -> p.getMacroTopic().equalsIgnoreCase(title))
                     .findFirst()
-                    .ifPresent(p -> {
-                        p.setPassed(true);
-                        userRepository.updateUser(user);
-                    });
+                    .ifPresentOrElse(
+                            p -> {
+                                p.setPassed(true);
+                                userRepository.updateUser(user);
+                            },
+                            () -> {
+                                // Non esiste ancora un record, creane uno nuovo
+                                Progress newP = new Progress();
+                                newP.setMacroTopic(title);
+                                newP.setPassed(true);
+                                newP.setQuestionResults(new ArrayList<>());
+                                newP.setScore(0);
+                                newP.setTime("0");
+                                progressList.add(newP);
+                                userRepository.updateUser(user);
+                            }
+                    );
         }
         // ricarica lo stato
         loadPathTopics();

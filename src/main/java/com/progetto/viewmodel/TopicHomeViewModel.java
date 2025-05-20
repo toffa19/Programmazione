@@ -1,13 +1,14 @@
 package com.progetto.viewmodel;
 
-import com.progetto.model.MacroTopicEntry;
-import com.progetto.model.Question;
+import com.progetto.model.*;
 import com.progetto.repository.ExerciseRepository;
 import com.progetto.repository.UserRepository;
+import com.progetto.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Gestisce la "home" di un singolo topic.
@@ -69,18 +70,26 @@ public class TopicHomeViewModel {
      * Controlla se una domanda è stata completata correttamente dall'utente corrente.
      */
     public boolean isQuestionCompleted(String questionId) {
-        var allUsers = userRepository.getAllUsers();
-        if (allUsers.isEmpty()) return false;
-        var currentUser = allUsers.get(0); // sostituire con SessionManager.getCurrentUserId()
+        // 1) Trova utente loggato
+        String me = SessionManager.getCurrentUserId();
+        if (me == null) return false;
 
-        if (currentUser.getProgress() != null) {
-            for (var prog : currentUser.getProgress()) {
-                if (prog.getQuestionResults() != null) {
-                    for (var qr : prog.getQuestionResults()) {
-                        if (qr.getQuestionId().equalsIgnoreCase(questionId) && qr.isCorrect()) {
-                            return true;
-                        }
-                    }
+        Optional<User> maybe = userRepository.getAllUsers().stream()
+                .filter(u -> me.equals(u.getId()) || me.equals(u.getUsername()))
+                .findFirst();
+        if (maybe.isEmpty()) return false;
+        User currentUser = maybe.get();
+
+        // 2) Controlla nei progressi se la domanda è già corretta
+        List<Progress> progList = currentUser.getProgress();
+        if (progList == null) return false;
+
+        for (Progress prog : progList) {
+            List<QuestionResult> results = prog.getQuestionResults();
+            if (results == null) continue;
+            for (QuestionResult qr : results) {
+                if (qr.getQuestionId().equalsIgnoreCase(questionId) && qr.isCorrect()) {
+                    return true;
                 }
             }
         }
