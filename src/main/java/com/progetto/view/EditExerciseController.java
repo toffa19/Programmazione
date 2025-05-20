@@ -3,7 +3,12 @@ package com.progetto.view;
 import com.progetto.viewmodel.EditExerciseViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class EditExerciseController {
 
@@ -14,6 +19,7 @@ public class EditExerciseController {
     @FXML private TextField opt0, opt1, opt2, opt3;
     @FXML private ComboBox<String> correctCombo;
     @FXML private Button saveButton;
+    @FXML private Button homeButton;       // ← nuovo
 
     private final EditExerciseViewModel vm = new EditExerciseViewModel();
 
@@ -54,5 +60,21 @@ public class EditExerciseController {
         correctCombo.valueProperty().bindBidirectional(vm.correctAnswerProperty());
 
         saveButton.setOnAction(e -> vm.saveEdited());
+
+        homeButton.setOnAction(e -> {
+            closeAndGoBack(e);
+        });
+    }
+    // Chiude questa finestra e ritorna a EditorHomeView.fxml
+    private void closeAndGoBack(javafx.event.Event e) {
+        try {
+            Parent home = FXMLLoader.load(getClass().getResource("/view/EditorHomeView.fxml"));
+            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(home, 800, 600));
+            stage.show();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Impossibile tornare alla home.").showAndWait();
+        }
     }
 }

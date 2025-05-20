@@ -6,10 +6,13 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import javafx.scene.control.ScrollPane;
+import javafx.stage.Stage;
 
 public class CreateExerciseController {
     @FXML private ComboBox<String> topicCombo;
@@ -25,6 +28,7 @@ public class CreateExerciseController {
     @FXML private VBox formsContainer;
     @FXML private javafx.scene.control.Button saveAllButton;
     private final CreateExerciseViewModel vm = new CreateExerciseViewModel();
+    @FXML private Button homeButton;       // ← nuovo
 
     @FXML public void initialize() {
         // Ogni click aggiunge una nuova scheda **vuota**
@@ -56,6 +60,22 @@ public class CreateExerciseController {
         });
         addAnotherButton.setOnAction(e -> vm.createAndContinue());
 
+        homeButton.setOnAction(e -> {
+            closeAndGoBack(e);
+        });
+    }
+
+    // Chiude questa finestra e ritorna a EditorHomeView.fxml
+    private void closeAndGoBack(javafx.event.Event e) {
+        try {
+            Parent home = FXMLLoader.load(getClass().getResource("/view/EditorHomeView.fxml"));
+            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(home, 800, 600));
+            stage.show();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Impossibile tornare alla home.").showAndWait();
+        }
     }
 
     private void addForm() {

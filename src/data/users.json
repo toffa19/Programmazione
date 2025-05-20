@@ -148,7 +148,7 @@
     "username" : "gigi",
     "password" : "gigi",
     "firstName" : "gigi",
-    "email" : null,
+    "email" : "gigi@gmail",
     "role" : "editor",
     "progress" : null,
     "loginDates" : null

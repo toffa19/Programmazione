@@ -26,10 +26,8 @@ public class ProfileController {
 
     @FXML private TextField fullNameField;
     @FXML private TextField usernameField;
-    @FXML private TextField countryField;
     @FXML private PasswordField currentPasswordField;
     @FXML private PasswordField newPasswordField;
-    @FXML private ComboBox<String> languageComboBox;
 
     @FXML private Button editButton;
     @FXML private Button saveButton;
@@ -46,8 +44,6 @@ public class ProfileController {
         fullNameField.setText(viewModel.getFullName());
 
         // Combo lingue
-        List<String> langs = List.of("Italiano","English","Español","Français");
-        languageComboBox.setItems(FXCollections.observableArrayList(langs));
 
         // Profile image (placeholder)
         profileImage.setImage(new Image(
@@ -81,8 +77,6 @@ public class ProfileController {
     private void setEditMode(boolean editing) {
         fullNameField.setDisable(!editing);
         usernameField.setDisable(!editing);
-        countryField.setDisable(!editing);
-        languageComboBox.setDisable(!editing);
         newPasswordField.setDisable(!editing);
         saveButton.setDisable(!editing);
         editButton.setDisable(editing);
