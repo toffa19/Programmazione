@@ -87,6 +87,23 @@ public class ExerciseRepository {
         return wrapper;
     }
 
+    public void removeExercise(String topic, String level, String qid) {
+        for (MacroTopicEntry e : getAllEntries()) {
+            if (e.getMacroTopic().equals(topic)) {
+                List<MultipleChoiceExercise> list = switch(level) {
+                    case "facile"    -> e.getLevels().getFacile();
+                    case "medio"     -> e.getLevels().getMedio();
+                    case "difficile" -> e.getLevels().getDifficile();
+                    default          -> throw new IllegalArgumentException("Livello non valido: " + level);
+                };
+                list.removeIf(x -> x.getQuestionId().equals(qid));
+                saveExercises(); // serializza di nuovo il file exercises.json
+                break;
+            }
+        }
+    }
+
+
     public  void saveExercises() {
         try {
             File ext = new File(Config.EXERCISES_JSON_PATH);
