@@ -1,4 +1,3 @@
-// src/main/java/com/progetto/viewmodel/PathViewModel.java
 package com.progetto.viewmodel;
 
 import com.progetto.model.MacroTopicEntry;
@@ -10,6 +9,7 @@ import com.progetto.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 public class PathViewModel {
     private final ExerciseRepository exerciseRepository = new ExerciseRepository();
-    private final UserRepository userRepository         = new UserRepository();
+    private final UserRepository     userRepository     = new UserRepository();
     private final ObservableList<MacroTopicModel> topics = FXCollections.observableArrayList();
 
     /**
@@ -69,10 +69,15 @@ public class PathViewModel {
         }
         User user = maybeUser.get();
 
-        // 6) Marca passed/unlock successivo
+        // 6) Marca passed/unlock successivo, gestendo eventuale null progress
+        List<com.progetto.model.Progress> progressList =
+                user.getProgress() != null
+                        ? user.getProgress()
+                        : Collections.emptyList();
+
         for (int i = 0; i < topics.size(); i++) {
             MacroTopicModel mt = topics.get(i);
-            boolean passed = user.getProgress().stream()
+            boolean passed = progressList.stream()
                     .anyMatch(p -> p.getMacroTopic().equalsIgnoreCase(mt.getTitle()) && p.isPassed());
             if (passed) {
                 mt.setPassed(true);
@@ -100,7 +105,12 @@ public class PathViewModel {
 
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
-            user.getProgress().stream()
+            List<com.progetto.model.Progress> progressList =
+                    user.getProgress() != null
+                            ? user.getProgress()
+                            : Collections.emptyList();
+
+            progressList.stream()
                     .filter(p -> p.getMacroTopic().equalsIgnoreCase(title))
                     .findFirst()
                     .ifPresent(p -> {
