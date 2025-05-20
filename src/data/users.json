@@ -4,11 +4,8 @@
     "username" : "mario.rossi",
     "password" : "m",
     "firstName" : "Mario",
-    "lastName" : null,
     "email" : "mario.rossi@example.com",
     "role" : "student",
-    "country" : "",
-    "language" : "",
     "progress" : [ {
       "macroTopic" : "Basics",
       "questionResults" : [ {
@@ -93,18 +90,57 @@
       "score" : 0,
       "time" : "0",
       "passed" : true
+    }, {
+      "macroTopic" : "DataStructures",
+      "questionResults" : [ {
+        "questionId" : "DS_F1",
+        "attempts" : 2,
+        "correct" : false
+      }, {
+        "questionId" : "DS_F2",
+        "attempts" : 2,
+        "correct" : false
+      }, {
+        "questionId" : "DS_F3",
+        "attempts" : 2,
+        "correct" : false
+      }, {
+        "questionId" : "DS_M1",
+        "attempts" : 2,
+        "correct" : false
+      }, {
+        "questionId" : "DS_M2",
+        "attempts" : 1,
+        "correct" : true
+      }, {
+        "questionId" : "DS_M3",
+        "attempts" : 1,
+        "correct" : false
+      }, {
+        "questionId" : "DS_D1",
+        "attempts" : 1,
+        "correct" : false
+      }, {
+        "questionId" : "DS_D2",
+        "attempts" : 1,
+        "correct" : false
+      }, {
+        "questionId" : "DS_D3",
+        "attempts" : 1,
+        "correct" : false
+      } ],
+      "score" : 10,
+      "time" : "65",
+      "passed" : true
     } ],
-    "loginDates" : null
+    "loginDates" : [ "2025-05-18" ]
   }, {
     "id" : "u002",
     "username" : "luca.verdi",
     "password" : "another_hashed_password",
     "firstName" : "Luca",
-    "lastName" : null,
     "email" : "luca.verdi@example.com",
     "role" : "student",
-    "country" : "",
-    "language" : "",
     "progress" : [ ],
     "loginDates" : null
   }, {
@@ -112,11 +148,8 @@
     "username" : "gigi",
     "password" : "gigi",
     "firstName" : "gigi",
-    "lastName" : null,
     "email" : null,
     "role" : "editor",
-    "country" : null,
-    "language" : null,
     "progress" : null,
     "loginDates" : null
   } ]

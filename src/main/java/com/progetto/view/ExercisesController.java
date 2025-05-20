@@ -1,4 +1,3 @@
-// src/main/java/com/progetto/view/ExercisesController.java
 package com.progetto.view;
 
 import com.progetto.viewmodel.ExercisesViewModel;
@@ -19,72 +18,77 @@ public class ExercisesController {
     @FXML private Label timerLabel;
     @FXML private Button exitButton;
 
-    private final ExercisesViewModel viewModel = new ExercisesViewModel();
+    private final ExercisesViewModel vm = new ExercisesViewModel();
 
     @FXML
     public void initialize() {
-        topicLabel.setText(ExercisesViewModel.getSelectedTopic());
+        try {
+            // deve essere stato chiamato prima: ExercisesViewModel.setSelectedTopic(...)
+            topicLabel.setText(ExercisesViewModel.getSelectedTopic());
 
-        questionLabel.textProperty().bind(viewModel.questionTextProperty());
-        timerLabel.textProperty().bind(viewModel.timerTextProperty());
+            vm.loadExercises();
+            vm.startTimer();
+            bindUI();
+            showCurrentQuestion();
 
-        viewModel.loadExercises();
-        showCurrentQuestion();
-        viewModel.startTimer();
+            nextButton.setOnAction(e -> onNext());
+            exitButton.setOnAction(e -> {
+                vm.stopTimer();
+                navigateToHome();
+            });
 
-        nextButton.setOnAction(evt -> {
-            boolean corretto = viewModel.submitAnswer();
-
-            // Recupero risposta corretta
-            String rispostaCorretta = viewModel.getCorrectAnswer();
-
-            // Creo il popup di feedback
-            Alert feedback = new Alert(Alert.AlertType.INFORMATION);
-            feedback.setHeaderText(corretto ? "Risposta corretta!" : "Risposta sbagliata!");
-            int wrong = viewModel.getWrongAnswersCount();
-            int total = viewModel.getTotalQuestionsCount();
-
-            // Contenuto del popup con risposta corretta
-            feedback.setContentText(
-                    (corretto ? "" : "La risposta giusta era: " + rispostaCorretta + "\n") +
-                            "Hai sbagliato " + wrong + " su " + total + " domande."
-            );
-            feedback.showAndWait();
-
-            if (viewModel.hasNext()) {
-                viewModel.nextQuestion();
-                showCurrentQuestion();
-            } else {
-                // ...
-            }
-        });
-
-        exitButton.setOnAction(evt -> {
-            viewModel.stopTimer();
+        } catch (Exception ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText("Impossibile caricare gli esercizi.");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
             navigateToHome();
-        });
+        }
     }
 
-    /** Ritorna alla HomeView */
+    private void bindUI() {
+        questionLabel.textProperty().bind(vm.questionTextProperty());
+        timerLabel.textProperty().bind(vm.timerTextProperty());
+    }
+
+    private void showCurrentQuestion() {
+        optionsContainer.getChildren().clear();
+        ToggleGroup group = new ToggleGroup();
+        for (String opt : vm.getOptions()) {
+            RadioButton rb = new RadioButton(opt);
+            rb.setToggleGroup(group);
+            rb.setOnAction(e -> vm.selectedAnswerProperty().set(opt));
+            optionsContainer.getChildren().add(rb);
+        }
+    }
+
+    private void onNext() {
+        boolean corretto = vm.submitAnswer();
+        Alert feedback = new Alert(Alert.AlertType.INFORMATION);
+        feedback.setHeaderText(corretto ? "Risposta corretta!" : "Risposta sbagliata!");
+        if (!corretto) {
+            feedback.setContentText("La risposta giusta era: " + vm.getCorrectAnswer());
+        }
+        feedback.showAndWait();
+
+        if (vm.hasNext()) {
+            vm.nextQuestion();
+            showCurrentQuestion();
+        } else {
+            vm.finishExercises();
+            navigateToHome();
+        }
+    }
+
     private void navigateToHome() {
         try {
-            Parent homeRoot = FXMLLoader.load(getClass().getResource("/view/HomeView.fxml"));
+            Parent home = FXMLLoader.load(getClass().getResource("/view/HomeView.fxml"));
             Stage stage = (Stage) exitButton.getScene().getWindow();
-            stage.setScene(new Scene(homeRoot, 900, 600));
+            stage.setScene(new Scene(home, 900, 600));
             stage.show();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-    private void showCurrentQuestion() {
-        optionsContainer.getChildren().clear();
-        ToggleGroup group = new ToggleGroup();
-        for (String opt : viewModel.getOptions()) {
-            RadioButton rb = new RadioButton(opt);
-            rb.setToggleGroup(group);
-            rb.setOnAction(e -> viewModel.selectedAnswerProperty().set(opt));
-            optionsContainer.getChildren().add(rb);
-        }
-    }
-
 }

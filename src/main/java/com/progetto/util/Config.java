@@ -7,6 +7,6 @@ public class Config {
     public static final String USERS_JSON_PATH = "src/data/users.json";
     public static final String EXERCISES_JSON_PATH = "src/data/exercises.json";
 
-    public static final ObjectMapper MAPPER = new ObjectMapper()
-            .enable(SerializationFeature.INDENT_OUTPUT);
+    public static final ObjectMapper MAPPER = new ObjectMapper();
+
 }

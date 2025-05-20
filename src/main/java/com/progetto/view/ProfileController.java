@@ -44,12 +44,10 @@ public class ProfileController {
         emailLabel.setText(viewModel.getEmail());
         usernameField.setText(viewModel.getUsername());
         fullNameField.setText(viewModel.getFullName());
-        countryField.setText(viewModel.getCountry());
 
         // Combo lingue
         List<String> langs = List.of("Italiano","English","Español","Français");
         languageComboBox.setItems(FXCollections.observableArrayList(langs));
-        languageComboBox.getSelectionModel().select(viewModel.getLanguage());
 
         // Profile image (placeholder)
         profileImage.setImage(new Image(
@@ -69,8 +67,6 @@ public class ProfileController {
             // aggiorna viewModel
             viewModel.setFullName(fullNameField.getText());
             viewModel.setUsername(usernameField.getText());
-            viewModel.setCountry(countryField.getText());
-            viewModel.setLanguage(languageComboBox.getValue());
             if (!newPasswordField.getText().isBlank()) {
                 viewModel.setPassword(newPasswordField.getText());
             }

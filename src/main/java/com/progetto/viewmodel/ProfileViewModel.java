@@ -44,19 +44,7 @@ public class ProfileViewModel {
         currentUser.setUsername(username);
     }
 
-    public String getCountry() {
-        return currentUser.getCountry() != null ? currentUser.getCountry() : "";
-    }
-    public void setCountry(String country) {
-        currentUser.setCountry(country);
-    }
 
-    public String getLanguage() {
-        return currentUser.getLanguage() != null ? currentUser.getLanguage() : "";
-    }
-    public void setLanguage(String language) {
-        currentUser.setLanguage(language);
-    }
 
     public String getPassword() {
         return currentUser.getPassword() != null ? currentUser.getPassword() : "";
@@ -73,8 +61,6 @@ public class ProfileViewModel {
         userRepository.updateUser(currentUser);
         System.out.println("Saving user data: "
                 + getFullName() + ", "
-                + getUsername() + ", "
-                + getCountry() + ", "
-                + getLanguage());
+                + getUsername());
     }
 }
